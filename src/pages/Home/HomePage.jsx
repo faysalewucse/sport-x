@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Cards from "./Cards";
 import Games from "./Games";
+import { RiMenu3Fill } from "react-icons/ri";
 
 const HomePage = () => {
   return (
@@ -18,6 +19,7 @@ const HomePage = () => {
 
       <Cards />
       <Games />
+      <RiMenu3Fill className="bg-black p-3 text-5xl text-white rounded-lg rotate-90 fixed right-5 bottom-5" />
     </div>
   );
 };
