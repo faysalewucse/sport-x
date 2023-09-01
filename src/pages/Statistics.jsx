@@ -1,25 +1,12 @@
 import { RiHome3Line, RiStarFill } from "react-icons/ri";
 import Chart from "./Home/Chart";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { gamesData } from "../data/data";
 
 const Statistics = () => {
-  const data = {
-    _id: "64ee0068d985a555ca97e4a8",
-    gid: "23_06_23_bal_sdn_1",
-    game_time: "10:30 PM",
-    game_date: "10, June, 23",
-    team: "BAL",
-    sp_name: "J. Means",
-    age: "32",
-    weight: "220",
-    wx_record: "12.2-9.8",
-    A_1: "J. Means ranks #21 in AL",
-    A_2: "Overall stuff ranks #17 for Left-hand pitchers",
-    Blurb:
-      "Ullamcorper ipsum feugiat placerat natoque consequat eu duis. Ultrices amet corper ipsum feugiat placerat natoque consequat eu duis. Ultrices",
-    y_arr: "800,435,724",
-    x_arr: "4/4,4/11,4/17",
-  };
+  const { id } = useParams();
+
+  const data = gamesData.find((team) => team._id === id);
 
   return (
     <div className="p-3 relative">
