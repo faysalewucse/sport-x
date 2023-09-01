@@ -27,20 +27,22 @@ const options = {
   },
 };
 
-const labels = ["Red", "Blue", "Green", "Yellow", "Pink"];
+const Chart = ({ x, y }) => {
+  const labels = x;
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: "Data",
-      data: labels.map((label) => label.length * 100),
-      backgroundColor: labels.map((label) => label.toLowerCase()),
-    },
-  ],
-};
+  const colors = ["red", "green", "blue", "pink", "yellow", "indigo", "violet"];
 
-const Chart = () => {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Data",
+        data: y,
+        backgroundColor: colors.map((color) => color),
+      },
+    ],
+  };
+
   return <Bar className="my-5" options={options} data={data} />;
 };
 
