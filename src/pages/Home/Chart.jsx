@@ -18,7 +18,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -29,7 +29,7 @@ export const options = {
 
 const labels = ["Red", "Blue", "Green", "Yellow", "Pink"];
 
-export const data = {
+const data = {
   labels,
   datasets: [
     {
