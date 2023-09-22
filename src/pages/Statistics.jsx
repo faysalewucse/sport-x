@@ -1,5 +1,5 @@
 import { RiHome3Line, RiStarFill } from "react-icons/ri";
-import Chart from "./Home/Chart";
+import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
 import { gamesData } from "../data/data";
 
@@ -10,7 +10,12 @@ const Statistics = () => {
 
   return (
     <div className="p-3 relative">
-      <Chart y={data.y_arr.split(",")} x={data.x_arr.split(",")} />
+      <MixedChart
+        x={data.x_arr.split(",")}
+        y={data.y_arr.split(",")}
+        awx={data.awx}
+      />
+
       <div className="">
         <h1 className="font-bold mb-3">Sp States</h1>
         <div className="border p-2 rounded-lg">

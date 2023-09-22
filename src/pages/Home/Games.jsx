@@ -1,15 +1,7 @@
 import GamesCard from "../../Cards/GamesCard";
-import { gamesData } from "../../data/data";
+import { pairedTeams } from "../../data/data";
 
 const Games = () => {
-  const result = Array.from(
-    { length: Math.ceil(gamesData.length / 2) },
-    (_, index) => {
-      const startIndex = index * 2;
-      return gamesData.slice(startIndex, startIndex + 2);
-    }
-  );
-
   return (
     <div>
       <h1 className="font-bold">Games</h1>
@@ -21,7 +13,7 @@ const Games = () => {
         <h6 className="w-1/4">Analytics</h6>
       </div>
 
-      {result.map((pair, index) => (
+      {pairedTeams.map((pair, index) => (
         <GamesCard key={index} pair={pair} />
       ))}
     </div>
