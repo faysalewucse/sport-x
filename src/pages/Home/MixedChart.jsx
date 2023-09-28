@@ -31,8 +31,9 @@ const options = {
   tension: 0.3,
 };
 
-function MixedChart({ x, y, barColor, awx }) {
+function MixedChart({ x, y, barColor, awx_arr }) {
   const labels = x;
+
   const barColors = barColor
     .split(",")
     .map((color) => (color === "g" ? "green" : "red"));
@@ -50,7 +51,7 @@ function MixedChart({ x, y, barColor, awx }) {
           above: "rgba(145, 145, 145, 0.4)",
         },
         borderDash: [5, 5],
-        data: [awx, awx, awx],
+        data: awx_arr.split(","),
       },
       {
         type: "bar",

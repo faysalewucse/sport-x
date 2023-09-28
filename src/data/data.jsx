@@ -20,6 +20,7 @@ export const gamesData = [
     twx: "560",
     cy_p: "55",
     x_arr: "4/4,4/11,4/17",
+    awx_arr: "333,333,333",
   },
   {
     _id: "64ee0068d985a555ca97e4a9",
@@ -42,6 +43,7 @@ export const gamesData = [
     twx: "1417",
     cy_p: "92",
     x_arr: "7/14,7/17,7/22,7/27",
+    awx_arr: "500,500,500,500",
   },
   {
     _id: "64ee0068d985a555ca97e4a1",
@@ -64,6 +66,7 @@ export const gamesData = [
     twx: "892",
     cy_p: "683",
     x_arr: "7/14,7/19,7/25,7/30",
+    awx_arr: "600,600,600,600",
   },
   {
     _id: "64ee0068d985a555ca97e4a4",
@@ -86,6 +89,7 @@ export const gamesData = [
     twx: "1210",
     cy_p: "57",
     x_arr: "5/14,5/19,5/23,5/28",
+    awx_arr: "533,533,533,533",
   },
   {
     _id: "64ee0068d985a555ca97e4v4",
@@ -108,6 +112,7 @@ export const gamesData = [
     twx: "1809",
     cy_p: "98",
     x_arr: "5/14,5/19,5/23,5/28",
+    awx_arr: "653,653,653,653",
   },
   {
     _id: "64ee0068d985a555ca97e4v6",
@@ -130,6 +135,7 @@ export const gamesData = [
     twx: "1909",
     cy_p: "101",
     x_arr: "5/14,5/19,5/23,5/28",
+    awx_arr: "663,663,663,663",
   },
   {
     _id: "64ee0068d985a555ca97e4v8",
@@ -152,6 +158,7 @@ export const gamesData = [
     twx: "1829",
     cy_p: "99",
     x_arr: "5/14,5/19,5/23,5/28",
+    awx_arr: "613,613,613,613",
   },
 ];
 
