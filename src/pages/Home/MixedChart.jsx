@@ -31,8 +31,11 @@ const options = {
   tension: 0.3,
 };
 
-function MixedChart({ x, y, awx }) {
+function MixedChart({ x, y, barColor, awx }) {
   const labels = x;
+  const barColors = barColor
+    .split(",")
+    .map((color) => (color === "g" ? "green" : "red"));
 
   const data = {
     labels,
@@ -42,18 +45,18 @@ function MixedChart({ x, y, awx }) {
         label: "Dataset 1",
         borderColor: "gray",
         borderWidth: 2,
-        backgroundColor: "gray",
         fill: {
           target: "origin",
           above: "rgba(145, 145, 145, 0.4)",
         },
+        borderDash: [5, 5],
         data: [awx, awx, awx],
       },
       {
         type: "bar",
         label: "Data",
         data: y,
-        borderColor: "green",
+        borderColor: barColors,
         borderWidth: 2,
       },
     ],

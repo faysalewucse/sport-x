@@ -21,7 +21,7 @@ const options = {
 
 const ScatterPlot = () => {
   const allData = gamesData.map((data) => {
-    return { x: data.twx, y: data.awx, r: data.c_yp };
+    return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 25) };
   });
 
   const data = {

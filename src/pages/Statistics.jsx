@@ -13,6 +13,7 @@ const Statistics = () => {
       <MixedChart
         x={data.x_arr.split(",")}
         y={data.y_arr.split(",")}
+        barColor={data.bar_color}
         awx={data.awx}
       />
 
