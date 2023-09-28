@@ -12,7 +12,7 @@ const HomePage = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima in
           ullam nihil quod facilis sint!
         </p>
-        <Link to="/" className="underline font-bold my-5 block">
+        <Link to="/scatterplot" className="underline font-bold my-5 block">
           Visit us
         </Link>
       </div>
