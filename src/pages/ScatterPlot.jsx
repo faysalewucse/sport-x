@@ -49,7 +49,7 @@ const ScatterPlot = () => {
             </tr>
           </thead>
 
-          {gamesData.map((data, index) => (
+          {allData.map((data, index) => (
             <ScatterplotListCard key={data._id} data={data} index={index + 1} />
           ))}
         </table>
