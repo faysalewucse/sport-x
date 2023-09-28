@@ -20,7 +20,7 @@ const options = {
 };
 
 const ScatterPlot = () => {
-  const allData = gamesData.map((data) => {
+  const allData = gamesData.filter(game=> game.chart_type === "sctr").map((data) => {
     return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 25) };
   });
 
