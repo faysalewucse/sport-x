@@ -162,10 +162,13 @@ export const gamesData = [
   },
 ];
 
+const filteredGameData = gamesData.filter(item => item.chart_type === "bar");
+
+// Pair the filtered data
 export const pairedTeams = Array.from(
-  { length: Math.ceil(gamesData.length / 2) },
+  { length: Math.ceil(filteredGameData.length / 2) },
   (_, index) => {
     const startIndex = index * 2;
-    return gamesData.slice(startIndex, startIndex + 2);
+    return filteredGameData.slice(startIndex, startIndex + 2);
   }
 );
