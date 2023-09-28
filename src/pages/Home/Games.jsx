@@ -13,7 +13,7 @@ const Games = () => {
         <h6 className="w-1/4">Analytics</h6>
       </div>
 
-      {pairedTeams.map((pair, index) => (
+      {pairedTeams.filter(team => team.chart_type === "bar").map((pair, index) => (
         <GamesCard key={index} pair={pair} />
       ))}
     </div>
