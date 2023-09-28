@@ -21,7 +21,7 @@ const options = {
 
 const ScatterPlot = () => {
   const allData = gamesData.filter(game=> game.chart_type === "sctr").map((data) => {
-    return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 25) };
+    return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 15) };
   });
 
   const data = {
