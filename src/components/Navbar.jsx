@@ -24,18 +24,32 @@ const items = [
     key: "4",
   },
   {
-    label: <Link to={"/contact"}>Contact</Link>,
+    label: (
+      <Link
+        className="md:bg-black md:text-white md:py-2 md:px-6 md:rounded"
+        to={"/contact"}
+      >
+        Contact
+      </Link>
+    ),
     key: "5",
   },
 ];
 
 const Navbar = () => {
   return (
-    <div className="flex items-center justify-between p-3">
+    <div className="max-w-7xl mx-auto flex items-center justify-between p-5">
       <h4 className="font-bold text-xl">
         Sport-<span className="font-normal font-dancing">X</span> Model
       </h4>
-      <Dropdown menu={{ items }} trigger={["click"]}>
+      <div className="hidden md:flex gap-5">
+        {items.map((item) => (
+          <div className="text-lg font-semibold" key={item.key}>
+            {item.label}
+          </div>
+        ))}
+      </div>
+      <Dropdown className="md:hidden" menu={{ items }} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             <RiMenu5Line className="text-2xl" />

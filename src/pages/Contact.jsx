@@ -23,9 +23,9 @@ const Contact = () => {
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-center font-bold text-2xl mb-5">Contact</h1>
-      <div className="p-2 rounded-lg border">
+    <div className="md:p-20 p-5">
+      {/* <h1 className="text-center font-bold text-2xl mb-5">Contact</h1> */}
+      <div className="max-w-3xl mx-auto md:p-10 p-5 rounded-lg border">
         <h1 className="text-2xl text-center font-bold capitalize mb-10">
           Got a Question?
         </h1>
