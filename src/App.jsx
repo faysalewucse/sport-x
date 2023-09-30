@@ -4,6 +4,7 @@ import HomePage from "./pages/Home/HomePage";
 import Statistics from "./pages/Statistics";
 import ScatterPlot from "./pages/ScatterPlot";
 import FaqPage from "./pages/FaqPage";
+import About from "./pages/About";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "/faq",
         element: <FaqPage />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       {
         path: "/statistics/:id",
