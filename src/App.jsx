@@ -5,6 +5,7 @@ import Statistics from "./pages/Statistics";
 import ScatterPlot from "./pages/ScatterPlot";
 import FaqPage from "./pages/FaqPage";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/statistics/:id",
