@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/Home/HomePage";
 import Statistics from "./pages/Statistics";
 import ScatterPlot from "./pages/ScatterPlot";
+import FaqPage from "./pages/FaqPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/faq",
+        element: <FaqPage />,
       },
       {
         path: "/statistics/:id",
