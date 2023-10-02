@@ -1,42 +1,43 @@
 import { Dropdown, Space } from "antd";
 import { RiMenu5Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const items = [
   {
-    label: <Link to={"/"}>Home</Link>,
+    label: "Home",
+    route: "/",
     key: "0",
   },
+  // {
+  //   label: "Bar Charts",
+  //   route: "/barcharts",
+  //   key: "1",
+  // },
   {
-    label: <Link to={"/"}>Bar Charts</Link>,
-    key: "1",
-  },
-  {
-    label: <Link to={"/scatterplot"}>Scatter Plot</Link>,
+    label: "Scatter Plot",
+    route: "/scatterplot",
     key: "2",
   },
   {
-    label: <Link to={"/about"}>About</Link>,
+    label: "About",
+    route: "/about",
     key: "3",
   },
   {
-    label: <Link to={"/faq"}>FAQ</Link>,
+    label: "FAQ",
+    route: "/faq",
     key: "4",
   },
   {
-    label: (
-      <Link
-        className="md:bg-black md:text-white md:py-2 md:px-6 md:rounded"
-        to={"/contact"}
-      >
-        Contact
-      </Link>
-    ),
+    label: "Contact",
+    route: "/contact",
     key: "5",
   },
 ];
 
 const Navbar = () => {
+  const currentPath = useLocation();
+
   return (
     <div className="max-w-7xl mx-auto flex items-center justify-between p-5">
       <h4 className="font-bold text-xl">
@@ -44,9 +45,17 @@ const Navbar = () => {
       </h4>
       <div className="hidden md:flex gap-5">
         {items.map((item) => (
-          <div className="text-lg font-semibold" key={item.key}>
+          <Link
+            to={item.route}
+            className={`${
+              currentPath.pathname === item.route
+                ? "md:bg-black md:text-white"
+                : "text-lg font-semibold"
+            } md:py-2 md:px-6 md:rounded`}
+            key={item.key}
+          >
             {item.label}
-          </div>
+          </Link>
         ))}
       </div>
       <Dropdown className="md:hidden" menu={{ items }} trigger={["click"]}>
