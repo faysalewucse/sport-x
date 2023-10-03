@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const items = [
   {
-    label: "Home",
+    label: <Link to={"/"}>Home</Link>,
     route: "/",
     key: "0",
   },
@@ -14,22 +14,22 @@ const items = [
   //   key: "1",
   // },
   {
-    label: "Scatter Plot",
+    label: <Link to={"/scatterplot"}>Scatter Plot</Link>,
     route: "/scatterplot",
     key: "2",
   },
   {
-    label: "About",
+    label: <Link to={"/about"}>About</Link>,
     route: "/about",
     key: "3",
   },
   {
-    label: "FAQ",
+    label: <Link to={"/faq"}>FAQ</Link>,
     route: "/faq",
     key: "4",
   },
   {
-    label: "Contact",
+    label: <Link to={"/contact"}>Contact</Link>,
     route: "/contact",
     key: "5",
   },
@@ -45,8 +45,7 @@ const Navbar = () => {
       </h4>
       <div className="hidden md:flex gap-5">
         {items.map((item) => (
-          <Link
-            to={item.route}
+          <div
             className={`${
               currentPath.pathname === item.route
                 ? "md:bg-black md:text-white"
@@ -55,7 +54,7 @@ const Navbar = () => {
             key={item.key}
           >
             {item.label}
-          </Link>
+          </div>
         ))}
       </div>
       <Dropdown className="md:hidden" menu={{ items }} trigger={["click"]}>
