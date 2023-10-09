@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { BsFillTriangleFill, BsStarFill } from "react-icons/bs";
 
 const GamesCard = ({ pair }) => {
-  console.log(pair);
   return (
     <div className="mb-3 border flex gap-2 justify-between rounded-lg">
       <div className="w-1/4 p-1 flex items-center justify-center flex-col text-xs">
