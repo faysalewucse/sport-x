@@ -2,19 +2,34 @@ import { RiHome3Line, RiStarFill } from "react-icons/ri";
 import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
 import { gamesData } from "../data/data";
+import { Radio } from "antd";
+import { useState } from "react";
 
 const Statistics = () => {
   const { id } = useParams();
 
-  const data = gamesData.find((team) => team._id === id);
+  const data = gamesData.find((team) => team._id["$oid"] === id);
+
+  const [selectedButton, setSelectedButton] = useState(1);
+  const onChange = (e) => {
+    setSelectedButton(e.target.value);
+  };
 
   return (
     <div className="p-3 relative">
+      <div className="flex justify-end mb-5">
+        <Radio.Group onChange={onChange} value={selectedButton}>
+          <Radio value={1}>Doted Line</Radio>
+          <Radio value={2}>Moving Avg Line</Radio>
+        </Radio.Group>
+      </div>
       <MixedChart
         x={data.x_arr.split(",")}
         y={data.y_arr.split(",")}
         barColor={data.bar_color}
         awx_arr={data.awx_arr}
+        mov_avg_arr={data.mov_ave_arr}
+        selectedButton={selectedButton}
       />
 
       <div className="">
