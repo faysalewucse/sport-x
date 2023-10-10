@@ -7,7 +7,9 @@ import {
 } from "chart.js";
 import { Bubble } from "react-chartjs-2";
 import { gamesData } from "../data/data";
-import ScatterplotListCard from "../Cards/ScatterplotListCard";
+import { Radio, Table } from "antd";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
@@ -20,9 +22,16 @@ const options = {
 };
 
 const ScatterPlot = () => {
-  const allData = gamesData.filter(game=> game.chart_type === "sctr").map((data) => {
-    return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 15) };
-  });
+  const [selectedValue, setSelectedValue] = useState("sctr_NL");
+  const onChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
+
+  const allData = gamesData
+    .filter((game) => game.chart_type === selectedValue)
+    .map((data) => {
+      return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 15) };
+    });
 
   const data = {
     datasets: [
@@ -34,26 +43,72 @@ const ScatterPlot = () => {
     ],
   };
 
+  const tableData = gamesData
+    .filter((game) => game.chart_type === selectedValue)
+    .map((data, index) => {
+      return {
+        id: data._id["$oid"],
+        serial: index + 1,
+        name: data.sp_name,
+        team: data.team,
+        awx_twx: `${data.awx}, ${data.twx}`,
+        cy_p: data.cy_p,
+      };
+    });
+
+  const columns = [
+    {
+      title: "#",
+      dataIndex: "serial",
+      key: "serial",
+    },
+    {
+      title: "Name(GS)",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Team",
+      dataIndex: "team",
+      key: "team",
+    },
+    {
+      title: "AWX, TWX",
+      dataIndex: "awx_twx",
+      key: "awx_twx",
+    },
+    {
+      title: "Cy_p",
+      dataIndex: "cy_p",
+      key: "cy_p",
+    },
+  ];
+
+  const navigate = useNavigate();
+
   return (
     <div className="p-5">
+      <Radio.Group className="mb-5" onChange={onChange} value={selectedValue}>
+        <Radio value="sctr_NL">SCTR_NL</Radio>
+        <Radio value="sctr_AL">SCTR_AL</Radio>
+      </Radio.Group>
+      {/* Scatter Plot */}
       <Bubble options={options} data={data} />
-      <div className="my-10">
-        <table className="min-w-full border-collapse text-sm">
-          <thead>
-            <tr>
-              <th className="w-1/5"></th>
-              <th className="w-1/4 text-center">Name(GS)</th>
-              <th className="w-1/5 text-center">(Team)</th>
-              <th className="w-3/5 text-center">(AWX, TWX)</th>
-              <th className="w-4/5 text-center">(Cy_p)</th>
-            </tr>
-          </thead>
-
-          {gamesData.filter(game=> game.chart_type === "sctr").map((data, index) => (
-            <ScatterplotListCard key={data._id} data={data} index={index + 1} />
-          ))}
-        </table>
-      </div>
+      {/* Table */}
+      <Table
+        size="small"
+        className="my-10"
+        dataSource={tableData}
+        columns={columns}
+        pagination={false}
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              navigate(`/statistics/${record.id}`);
+            },
+          };
+        }}
+      />
     </div>
   );
 };

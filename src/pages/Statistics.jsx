@@ -23,6 +23,7 @@ const Statistics = () => {
           <Radio value={2}>Moving Avg Line</Radio>
         </Radio.Group>
       </div>
+
       <MixedChart
         x={data.x_arr.split(",")}
         y={data.y_arr.split(",")}
