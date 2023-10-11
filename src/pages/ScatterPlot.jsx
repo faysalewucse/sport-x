@@ -30,10 +30,17 @@ const ScatterPlot = () => {
 
   const allData = gamesData
     .filter((game) => game.chart_type === selectedValue)
-    .map((data) => {
+    .map((data, index) => {
       return {
         label: [data.sp_name],
-        backgroundColor: "red",
+        backgroundColor:
+          index === 0
+            ? "blue"
+            : index === 1
+            ? "red"
+            : index === 2
+            ? "green"
+            : "gray",
         data: [
           {
             x: data.twx,
