@@ -19,7 +19,7 @@ const GamesCard = ({ pair }) => {
           </h1>
         </div>
         <Link
-          to={`/statistics/${pair[1]?._id}`}
+          to={`/statistics/${pair[1]?._id["$oid"]}`}
           className="bg-gray-800 p-1 text-white flex justify-between text-xs items-center font-semibold rounded-br-md"
         >
           <h1 className="w-1/3">{pair[1]?.team}</h1>

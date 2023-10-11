@@ -16,7 +16,8 @@ ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 const options = {
   scales: {
     y: {
-      beginAtZero: true,
+      min: 0.55,
+      max: 0.67,
     },
   },
 };
@@ -30,17 +31,22 @@ const ScatterPlot = () => {
   const allData = gamesData
     .filter((game) => game.chart_type === selectedValue)
     .map((data) => {
-      return { x: data.twx, y: data.awx, r: parseInt(data.cy_p / 15) };
+      return {
+        label: [data.sp_name],
+        backgroundColor: "red",
+        data: [
+          {
+            x: data.twx,
+            y: data.awx,
+            r: parseInt(data.cy_p / 15),
+          },
+        ],
+      };
     });
 
   const data = {
-    datasets: [
-      {
-        label: "Blue dataset",
-        data: allData,
-        backgroundColor: "red",
-      },
-    ],
+    labels: "Player Data",
+    datasets: allData,
   };
 
   const tableData = gamesData
@@ -101,6 +107,7 @@ const ScatterPlot = () => {
         dataSource={tableData}
         columns={columns}
         pagination={false}
+        rowClassName="cursor-pointer"
         onRow={(record) => {
           return {
             onClick: () => {
