@@ -33,19 +33,27 @@ const ScatterPlot = () => {
     .map((data, index) => {
       return {
         label: [data.sp_name],
+        backgroundColorOpacity: 0.5,
         backgroundColor:
           index === 0
-            ? "blue"
+            ? "rgba(255, 0, 0, 0.5)"
             : index === 1
-            ? "red"
+            ? "rgba(3, 138, 255, 0.5)"
             : index === 2
-            ? "green"
+            ? "rgba(46, 204, 113, 0.5)"
             : "gray",
         data: [
           {
             x: data.twx,
             y: data.awx,
-            r: parseInt(data.cy_p / 15),
+            r:
+              index === 0
+                ? parseInt(data.cy_p / 15) * 2
+                : index === 1
+                ? parseInt(data.cy_p / 15) * 1.67
+                : index === 2
+                ? parseInt(data.cy_p / 15) * 1.33
+                : parseInt(data.cy_p / 15),
           },
         ],
       };
