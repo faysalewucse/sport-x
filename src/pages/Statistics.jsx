@@ -1,11 +1,48 @@
 import { RiHome3Line, RiStarFill } from "react-icons/ri";
 import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
-import { gamesData } from "../data/data";
-import { Radio } from "antd";
+import { filteredGameData, gamesData } from "../data/data";
+import { Button, Dropdown, Radio, Select, Space } from "antd";
 import { useState } from "react";
 
+const options = gamesData.map((game) => {
+  return {
+    key: game._id["$oid"],
+    value: game.sp_name,
+    label: (
+      <div className="flex justify-between">
+        <p>{game.team}</p>
+        <p>{game.sp_name}</p>
+      </div>
+    ),
+  };
+});
+
+const tadaysPitchers = filteredGameData.map((game) => {
+  return {
+    key: game._id["$oid"],
+    value: game.sp_name,
+    label: (
+      <div className="flex justify-between">
+        <p>{game.team}</p>
+        <p>{game.sp_name}</p>
+      </div>
+    ),
+  };
+});
+
 const Statistics = () => {
+  const onSearchSelect = (value) => {
+    console.log(`selected ${value}`);
+  };
+
+  const filterOption = (input, option) =>
+    (option?.value ?? "")
+      .toLowerCase()
+      .split(" ")
+      .pop()
+      .includes(input.toLowerCase());
+
   const { id } = useParams();
 
   const data = gamesData.find((team) => team._id["$oid"] === id);
@@ -15,8 +52,48 @@ const Statistics = () => {
     setSelectedButton(e.target.value);
   };
 
+  const [selected, setSelected] = useState(1);
+
   return (
     <div className="p-3 relative">
+      <div className="flex text-center bg-gray-800 text-white p-1 rounded-lg">
+        <p
+          onClick={() => setSelected(1)}
+          className={`${
+            selected === 1 && "bg-white text-gray-800"
+          } rounded flex-1`}
+        >
+          Today's Pitchers
+        </p>
+        <p
+          onClick={() => setSelected(2)}
+          className={`${
+            selected === 2 && "bg-white text-gray-800"
+          } rounded flex-1`}
+        >
+          Search by L. Name
+        </p>
+      </div>
+      <div className="my-5">
+        {selected === 1 ? (
+          <Dropdown menu={{ items: tadaysPitchers }} trigger={["click"]}>
+            <a onClick={(e) => e.preventDefault()}>
+              <Button style={{width: '100%'}}>{options[0].label}</Button>
+            </a>
+          </Dropdown>
+        ) : (
+          <Select
+            showSearch
+            placeholder="Enter Last Name"
+            optionFilterProp="children"
+            onChange={onSearchSelect}
+            className="w-full"
+            filterOption={filterOption}
+            options={options}
+          />
+        )}
+      </div>
+
       <div className="flex justify-end mb-5">
         <Radio.Group onChange={onChange} value={selectedButton}>
           <Radio value={1}>Doted Line</Radio>

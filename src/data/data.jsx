@@ -989,7 +989,7 @@ export const gamesData = [
   },
 ];
 
-const filteredGameData = gamesData.filter((item) => item.chart_type === "bar");
+export const filteredGameData = gamesData.filter((item) => item.chart_type === "bar");
 
 // Pair the filtered data
 export const pairedTeams = Array.from(
