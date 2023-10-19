@@ -40,9 +40,9 @@ const Navbar = () => {
 
   return (
     <div className="max-w-7xl mx-auto flex items-center justify-between p-5">
-      <h4 className="font-bold text-xl">
+      <Link to="/" className="font-bold text-xl">
         Sport-<span className="font-normal font-dancing">X</span> Model
-      </h4>
+      </Link>
       <div className="hidden md:flex gap-5">
         {items.map((item) => (
           <div

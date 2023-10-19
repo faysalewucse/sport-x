@@ -5,28 +5,18 @@ import { filteredGameData, gamesData } from "../data/data";
 import { Button, Dropdown, Radio, Select, Space } from "antd";
 import { useState } from "react";
 
-const options = gamesData.map((game) => {
+const options = filteredGameData.map((game) => {
   return {
     key: game._id["$oid"],
     value: game.sp_name,
     label: (
-      <div className="flex justify-between">
+      <Link
+        to={`/statistics/${game._id["$oid"]}`}
+        className="flex justify-between"
+      >
         <p>{game.team}</p>
         <p>{game.sp_name}</p>
-      </div>
-    ),
-  };
-});
-
-const tadaysPitchers = filteredGameData.map((game) => {
-  return {
-    key: game._id["$oid"],
-    value: game.sp_name,
-    label: (
-      <div className="flex justify-between">
-        <p>{game.team}</p>
-        <p>{game.sp_name}</p>
-      </div>
+      </Link>
     ),
   };
 });
@@ -46,6 +36,7 @@ const Statistics = () => {
   const { id } = useParams();
 
   const data = gamesData.find((team) => team._id["$oid"] === id);
+
 
   const [selectedButton, setSelectedButton] = useState(1);
   const onChange = (e) => {
@@ -76,10 +67,11 @@ const Statistics = () => {
       </div>
       <div className="my-5">
         {selected === 1 ? (
-          <Dropdown menu={{ items: tadaysPitchers }} trigger={["click"]}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Button style={{width: '100%'}}>{options[0].label}</Button>
-            </a>
+          <Dropdown menu={{ items: options }} trigger={["click"]}>
+              <Button type="border border-gray-200" className="flex justify-between" style={{ width: "100%" }}>
+                <p>{data.team}</p>
+                <p>{data.sp_name}</p>
+              </Button>
           </Dropdown>
         ) : (
           <Select
