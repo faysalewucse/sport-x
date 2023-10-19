@@ -2,7 +2,7 @@ import { RiHome3Line, RiStarFill } from "react-icons/ri";
 import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
 import { filteredGameData, gamesData } from "../data/data";
-import { Button, Dropdown, Radio, Select, Space } from "antd";
+import { Button, Dropdown, Radio, Select } from "antd";
 import { useState } from "react";
 
 const options = filteredGameData.map((game) => {
@@ -37,53 +37,44 @@ const Statistics = () => {
 
   const data = gamesData.find((team) => team._id["$oid"] === id);
 
-
   const [selectedButton, setSelectedButton] = useState(1);
   const onChange = (e) => {
     setSelectedButton(e.target.value);
   };
 
-  const [selected, setSelected] = useState(1);
-
   return (
     <div className="p-3 relative">
-      <div className="flex text-center bg-gray-800 text-white p-1 rounded-lg">
-        <p
-          onClick={() => setSelected(1)}
-          className={`${
-            selected === 1 && "bg-white text-gray-800"
-          } rounded flex-1`}
-        >
-          Today's Pitchers
-        </p>
-        <p
-          onClick={() => setSelected(2)}
-          className={`${
-            selected === 2 && "bg-white text-gray-800"
-          } rounded flex-1`}
-        >
-          Search by L. Name
-        </p>
-      </div>
       <div className="my-5">
-        {selected === 1 ? (
-          <Dropdown menu={{ items: options }} trigger={["click"]}>
-              <Button type="border border-gray-200" className="flex justify-between" style={{ width: "100%" }}>
-                <p>{data.team}</p>
-                <p>{data.sp_name}</p>
-              </Button>
+        <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
+          <p className="w-fit">Today&apos;s Pitchers</p>
+          <Dropdown
+            className="flex-1"
+            menu={{ items: options }}
+            trigger={["click"]}
+          >
+            <Button
+              type="btn"
+              className="border border-gray-200 bg-white flex justify-between"
+              style={{ width: "100%" }}
+            >
+              <p>{data.team}</p>
+              <p>{data.sp_name}</p>
+            </Button>
           </Dropdown>
-        ) : (
+        </div>
+
+        <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
+          <p className="">Search by L. Name</p>
           <Select
             showSearch
             placeholder="Enter Last Name"
             optionFilterProp="children"
             onChange={onSearchSelect}
-            className="w-full"
+            className="flex-1"
             filterOption={filterOption}
             options={options}
           />
-        )}
+        </div>
       </div>
 
       <div className="flex justify-end mb-5">

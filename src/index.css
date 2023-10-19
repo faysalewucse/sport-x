@@ -5,3 +5,7 @@
 .font-dancing {
   font-family: "Dancing Script", cursive;
 }
+
+.transition-300 {
+  @apply transition-all duration-300;
+}

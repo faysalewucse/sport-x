@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 import Cards from "./Cards";
 import Games from "./Games";
 import { RiMenu3Fill } from "react-icons/ri";
-import { Select } from "antd";
 
 const HomePage = () => {
-
   return (
     <div className="p-3">
       <div>
