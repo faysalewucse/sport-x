@@ -21,6 +21,22 @@ const options = filteredGameData.map((game) => {
   };
 });
 
+const searchOptions = gamesData.map((game) => {
+  return {
+    key: game._id["$oid"],
+    value: game.sp_name,
+    label: (
+      <Link
+        to={`/statistics/${game._id["$oid"]}`}
+        className="flex justify-between"
+      >
+        <p>{game.team}</p>
+        <p>{game.sp_name}</p>
+      </Link>
+    ),
+  };
+});
+
 const Statistics = () => {
   const onSearchSelect = (value) => {
     console.log(`selected ${value}`);
@@ -72,7 +88,7 @@ const Statistics = () => {
             onChange={onSearchSelect}
             className="flex-1"
             filterOption={filterOption}
-            options={options}
+            options={searchOptions}
           />
         </div>
       </div>
