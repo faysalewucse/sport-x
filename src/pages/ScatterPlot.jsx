@@ -7,7 +7,7 @@ import {
 } from "chart.js";
 import { Bubble } from "react-chartjs-2";
 import { gamesData } from "../data/data";
-import { Radio, Select, Table } from "antd";
+import { Radio, Table } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,16 +24,10 @@ const options = {
 
 const ScatterPlot = () => {
   const navigate = useNavigate();
-  const itemsPerPage = 20; // Number of items per page
 
   const [selectedValue, setSelectedValue] = useState("AL_yes");
-  const [selectedCategory, setSelectedCategory] = useState("1");
   const onChange = (e) => {
     setSelectedValue(e.target.value);
-  };
-
-  const handleChange = (category) => {
-    setSelectedCategory(category);
   };
 
   const allData = gamesData
@@ -55,12 +49,12 @@ const ScatterPlot = () => {
               ? "rgba(46, 204, 113, 0.5)"
               : "gray"
             : i >= 0 && i <= 19
-            ? "rgba(65, 105, 225, 1)"
+            ? "black"
             : i >= 20 && i <= 39
             ? "red"
             : i >= 40 && i <= 59
-            ? "yellow"
-            : "gray",
+            ? "blue"
+            : "green",
         data: [
           {
             x: data.twx,
@@ -79,15 +73,9 @@ const ScatterPlot = () => {
     })
     .filter((data) => data !== null);
 
-  const selectedCategoryData = allData.slice(
-    (selectedCategory - 1) * itemsPerPage,
-    selectedCategory * itemsPerPage
-  );
-
   const data = {
     labels: "Player Data",
-    datasets:
-      selectedValue === "all" ? selectedCategoryData : allData.slice(0, 20),
+    datasets: allData,
   };
 
   const tableData = gamesData
@@ -103,13 +91,15 @@ const ScatterPlot = () => {
         name: (
           <div
             className={`${
-              i >= 0 && i <= 19
-                ? "text-blue-500"
-                : i >= 20 && i <= 39
-                ? "text-red-500"
-                : i >= 40 && i <= 59
-                ? "text-yellow-500"
-                : "text-gray-500"
+              selectedValue === "all"
+                ? i >= 0 && i <= 19
+                  ? "text-black"
+                  : i >= 20 && i <= 39
+                  ? "text-red-500"
+                  : i >= 40 && i <= 59
+                  ? "text-blue-500"
+                  : "text-green-500"
+                : "text-black"
             }`}
           >
             {data.sp_name}
@@ -150,24 +140,24 @@ const ScatterPlot = () => {
     },
   ];
 
-  const categories = [
-    {
-      value: "1",
-      label: "Cy Young Worthy",
-    },
-    {
-      value: "2",
-      label: "ALL-Star",
-    },
-    {
-      value: "3",
-      label: "Num 2 Starter",
-    },
-    {
-      value: "4",
-      label: "Num 3 Starter",
-    },
-  ];
+  // const categories = [
+  //   {
+  //     value: "1",
+  //     label: "Cy Young Worthy",
+  //   },
+  //   {
+  //     value: "2",
+  //     label: "ALL-Star",
+  //   },
+  //   {
+  //     value: "3",
+  //     label: "Num 2 Starter",
+  //   },
+  //   {
+  //     value: "4",
+  //     label: "Num 3 Starter",
+  //   },
+  // ];
 
   return (
     <div className="p-5">
@@ -176,14 +166,14 @@ const ScatterPlot = () => {
         <Radio value="NL_yes">SCTR_NL</Radio>
         <Radio value="all">All Pitchers</Radio>
       </Radio.Group>
-      {selectedValue === "all" && (
+      {/* {selectedValue === "all" && (
         <Select
           defaultValue="1"
           className="w-40"
           onChange={handleChange}
           options={categories}
         />
-      )}
+      )} */}
       {/* Scatter Plot */}
       <Bubble options={options} data={data} />
 

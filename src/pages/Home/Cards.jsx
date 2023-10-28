@@ -1,14 +1,35 @@
+import { Link } from "react-router-dom";
+import { gamesData } from "../../data/data";
+
 const Cards = () => {
   const data = [
     {
       img: "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus officiis nihil doloribus beatae reiciendis aliquid.",
+      details: (
+        <p>
+          {gamesData[0].sp_name} had excellent outing last night, check out his{" "}
+          <Link
+            className="text-blue-400"
+            to={`statistics/${gamesData[0]._id["$oid"]}`}
+          >
+            player page
+          </Link>
+        </p>
+      ),
     },
     {
       img: "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus officiis nihil doloribus beatae reiciendis aliquid.",
+      details: (
+        <p>
+          {gamesData[0].sp_name} had excellent outing last night, check out his{" "}
+          <Link
+            className="text-blue-400"
+            to={`statistics/${gamesData[0]._id["$oid"]}`}
+          >
+            player page
+          </Link>
+        </p>
+      ),
     },
   ];
 

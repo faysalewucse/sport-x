@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Cards from "./Cards";
 import Games from "./Games";
 import { RiMenu3Fill } from "react-icons/ri";
+import { gamesData } from "../../data/data";
 
 const HomePage = () => {
   return (
@@ -9,8 +10,13 @@ const HomePage = () => {
       <div>
         <b>Welcome back</b>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima in
-          ullam nihil quod facilis sint!
+          {gamesData[0].sp_name} had excellent outing last night, check out his{" "}
+          <Link
+            className="text-blue-400"
+            to={`statistics/${gamesData[0]._id["$oid"]}`}
+          >
+            player page
+          </Link>
         </p>
         <Link to="/scatterplot" className="underline font-bold my-5 block">
           Visit us
