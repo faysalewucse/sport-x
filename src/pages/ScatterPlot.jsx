@@ -13,15 +13,6 @@ import { useNavigate } from "react-router-dom";
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
-const options = {
-  scales: {
-    y: {
-      min: 0.5,
-      max: 0.7,
-    },
-  },
-};
-
 const ScatterPlot = () => {
   const navigate = useNavigate();
 
@@ -140,24 +131,19 @@ const ScatterPlot = () => {
     },
   ];
 
-  // const categories = [
-  //   {
-  //     value: "1",
-  //     label: "Cy Young Worthy",
-  //   },
-  //   {
-  //     value: "2",
-  //     label: "ALL-Star",
-  //   },
-  //   {
-  //     value: "3",
-  //     label: "Num 2 Starter",
-  //   },
-  //   {
-  //     value: "4",
-  //     label: "Num 3 Starter",
-  //   },
-  // ];
+  const options = {
+    plugins: {
+      legend: {
+        display: selectedValue !== "all",
+      },
+    },
+    scales: {
+      y: {
+        min: 0.5,
+        max: 0.7,
+      },
+    },
+  };
 
   return (
     <div className="p-5">
@@ -168,10 +154,10 @@ const ScatterPlot = () => {
       </Radio.Group>
       {/* {selectedValue === "all" && (
         <Select
-          defaultValue="1"
-          className="w-40"
-          onChange={handleChange}
-          options={categories}
+        defaultValue="1"
+        className="w-40"
+        onChange={handleChange}
+        options={categories}
         />
       )} */}
       {/* Scatter Plot */}
