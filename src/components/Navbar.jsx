@@ -8,11 +8,11 @@ const items = [
     route: "/",
     key: "0",
   },
-  // {
-  //   label: "Bar Charts",
-  //   route: "/barcharts",
-  //   key: "1",
-  // },
+  {
+    label: <Link to={"/teams"}>Teams</Link>,
+    route: "/teams",
+    key: "1",
+  },
   {
     label: <Link to={"/scatterplot"}>Scatter Plot</Link>,
     route: "/scatterplot",
@@ -43,7 +43,7 @@ const Navbar = () => {
       <Link to="/" className="font-bold text-xl">
         Sport-<span className="font-normal font-dancing">X</span> Model
       </Link>
-      <div className="hidden md:flex gap-5">
+      <div className="hidden lg:flex gap-5">
         {items.map((item) => (
           <div
             className={`${
@@ -57,7 +57,7 @@ const Navbar = () => {
           </div>
         ))}
       </div>
-      <Dropdown className="md:hidden" menu={{ items }} trigger={["click"]}>
+      <Dropdown className="lg:hidden" menu={{ items }} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             <RiMenu5Line className="text-2xl" />

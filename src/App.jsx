@@ -6,6 +6,7 @@ import ScatterPlot from "./pages/ScatterPlot";
 import FaqPage from "./pages/FaqPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Teams from "./pages/Teams/Teams";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/scatterplot",
         element: <ScatterPlot />,
+      },
+      {
+        path: "/teams",
+        element: <Teams />,
       },
     ],
   },
