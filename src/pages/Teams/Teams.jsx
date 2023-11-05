@@ -58,7 +58,9 @@ const options = {
 };
 
 const Teams = () => {
-  const [selectedTeam, setSelectedTeam] = useState(0);
+  const [selectedTeam, setSelectedTeam] = useState(
+    localStorage.getItem("selectedTeam") || 0
+  );
 
   const items = [
     {
@@ -136,7 +138,10 @@ const Team = ({ category, setSelectedTeam, startIndex, endIndex }) => (
     {teamsData.slice(startIndex, endIndex).map((game, index) => (
       <p
         className="cursor-pointer underline"
-        onClick={() => setSelectedTeam(startIndex + index)}
+        onClick={() => {
+          setSelectedTeam(startIndex + index);
+          localStorage.setItem("selectedTeam", startIndex + index);
+        }}
         key={game._id["$oid"]}
       >
         {game.team}
