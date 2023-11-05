@@ -1,18 +1,69 @@
+import { Table } from "antd";
 import { gamesData } from "../../data/data";
+import { useNavigate } from "react-router-dom";
 
 const ListedPlayers = ({ lastNames }) => {
+  const navigate = useNavigate();
+
+  const tableData = gamesData
+    .filter((game) => lastNames.includes(game.sp_name.split(" ").pop()))
+    .map((data, i) => {
+      return {
+        id: data._id["$oid"],
+        serial: i + 1,
+        name: <div>{data.sp_name}</div>,
+        team: data.team,
+        awx_twx: `${data.awx}, ${data.twx}`,
+        cy_p: data.cy_p,
+      };
+    });
+
+  const columns = [
+    {
+      title: "#",
+      dataIndex: "serial",
+      key: "serial",
+    },
+    {
+      title: "Name(GS)",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Team",
+      dataIndex: "team",
+      key: "team",
+    },
+    {
+      title: "AWX, TWX",
+      dataIndex: "awx_twx",
+      key: "awx_twx",
+    },
+    {
+      title: "Cy_p",
+      dataIndex: "cy_p",
+      key: "cy_p",
+    },
+  ];
+
   return (
     <div className="my-5">
-      <h1 className="font-semibold text-center text-xl mb-5">Listed Teams</h1>
-      <div className="flex flex-col gap-2">
-        {gamesData
-          ?.filter((game) => lastNames.includes(game.sp_name.split(" ").pop()))
-          .map((game) => (
-            <div className="bg-gray-300 p-1 rounded" key={game._id["$oid"]}>
-              {game.sp_name}
-            </div>
-          ))}
-      </div>
+      <h1 className="font-semibold text-center text-xl mb-5">Team Starters</h1>
+      <Table
+        size="small"
+        className="my-10"
+        dataSource={tableData}
+        columns={columns}
+        pagination={false}
+        rowClassName="cursor-pointer"
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              navigate(`/statistics/${record.id}`);
+            },
+          };
+        }}
+      />
     </div>
   );
 };
