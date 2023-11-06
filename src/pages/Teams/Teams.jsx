@@ -1,4 +1,3 @@
-import { Collapse } from "antd";
 import { gamesData } from "../../data/data";
 import {
   Chart as ChartJS,
@@ -128,44 +127,47 @@ const Teams = () => {
   return (
     <div className="p-5">
       <div>
-          <Team
-            category={"Al East"}
-            setSelectedTeam={setSelectedTeam}
-            startIndex={0}
-            endIndex={5}
-          />
-          <Team
-            category={"Al Central"}
-            setSelectedTeam={setSelectedTeam}
-            startIndex={5}
-            endIndex={10}
-          />
-          <Team
-            category={"Al West"}
-            setSelectedTeam={setSelectedTeam}
-            startIndex={10}
-            endIndex={15}
-          />
-          <Team
-            category={"NL East"}
-            setSelectedTeam={setSelectedTeam}
-            startIndex={15}
-            endIndex={20}
-          />
+        <h1 className="text-xl font-bold">
+          Teams : {teamsData[selectedTeam].team}
+        </h1>
+        <Team
+          category={"Al East"}
+          setSelectedTeam={setSelectedTeam}
+          startIndex={0}
+          endIndex={5}
+        />
+        <Team
+          category={"Al Central"}
+          setSelectedTeam={setSelectedTeam}
+          startIndex={5}
+          endIndex={10}
+        />
+        <Team
+          category={"Al West"}
+          setSelectedTeam={setSelectedTeam}
+          startIndex={10}
+          endIndex={15}
+        />
+        <Team
+          category={"NL East"}
+          setSelectedTeam={setSelectedTeam}
+          startIndex={15}
+          endIndex={20}
+        />
 
-          <Team
-            category={"NL West"}
-            setSelectedTeam={setSelectedTeam}
-            startIndex={20}
-            endIndex={25}
-          />
-          <Team
-            category={"NL West"}
-            setSelectedTeam={setSelectedTeam}
-            startIndex={25}
-            endIndex={30}
-          />
-        </div>
+        <Team
+          category={"NL West"}
+          setSelectedTeam={setSelectedTeam}
+          startIndex={20}
+          endIndex={25}
+        />
+        <Team
+          category={"NL West"}
+          setSelectedTeam={setSelectedTeam}
+          startIndex={25}
+          endIndex={30}
+        />
+      </div>
       {/* <Collapse size="large" accordion items={items} /> */}
       <Bar className="my-10" options={options} data={data} />
       <TeamStates teamsData={teamsData} selectedTeam={selectedTeam} />
