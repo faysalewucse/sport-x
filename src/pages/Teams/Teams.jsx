@@ -24,43 +24,6 @@ ChartJS.register(
 
 const teamsData = gamesData.filter((game) => game.team === game.sp_name);
 
-const options = {
-  indexAxis: "y",
-  elements: {
-    bar: {
-      borderWidth: 2,
-    },
-  },
-  scales: {
-    x: {
-      min: 40,
-    },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: true,
-      text: "Horizontal Bar Chart",
-    },
-    layout: {
-      padding: 5,
-    },
-    datalabels: {
-      font: {
-        weight: "bold",
-      },
-      align: "end",
-      anchor: "end",
-      formatter: function (value, context) {
-        return context.chart.formattedData[context.dataIndex];
-      },
-    },
-  },
-};
-
 const Teams = () => {
   const [selectedTeam, setSelectedTeam] = useState(
     localStorage.getItem("selectedTeam") || 0
@@ -114,6 +77,43 @@ const Teams = () => {
   //   },
   // ];
 
+  const options = {
+    indexAxis: "y",
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    scales: {
+      x: {
+        min: 40,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: teamsData[selectedTeam].gid,
+      },
+      layout: {
+        padding: 5,
+      },
+      datalabels: {
+        font: {
+          weight: "bold",
+        },
+        align: "end",
+        anchor: "end",
+        formatter: function (value, context) {
+          return context.chart.formattedData[context.dataIndex];
+        },
+      },
+    },
+  };
+
   const data = {
     labels: teamsData[selectedTeam].y_arr.split(","),
     datasets: [
@@ -131,19 +131,19 @@ const Teams = () => {
           Teams : {teamsData[selectedTeam].team}
         </h1>
         <Team
-          category={"Al East"}
+          category={"AL East"}
           setSelectedTeam={setSelectedTeam}
           startIndex={0}
           endIndex={5}
         />
         <Team
-          category={"Al Central"}
+          category={"AL Central"}
           setSelectedTeam={setSelectedTeam}
           startIndex={5}
           endIndex={10}
         />
         <Team
-          category={"Al West"}
+          category={"AL West"}
           setSelectedTeam={setSelectedTeam}
           startIndex={10}
           endIndex={15}
@@ -156,7 +156,7 @@ const Teams = () => {
         />
 
         <Team
-          category={"NL West"}
+          category={"NL Central"}
           setSelectedTeam={setSelectedTeam}
           startIndex={20}
           endIndex={25}
