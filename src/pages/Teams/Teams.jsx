@@ -95,7 +95,12 @@ const Teams = () => {
         display: false,
       },
       title: {
+        font: {
+          size: 20,
+        },
         display: true,
+        color: "black",
+
         text: teamsData[selectedTeam].gid,
       },
       layout: {
@@ -169,7 +174,12 @@ const Teams = () => {
         />
       </div>
       {/* <Collapse size="large" accordion items={items} /> */}
-      <Bar className="my-10" options={options} data={data} />
+      <Bar
+        title={teamsData[selectedTeam].gid}
+        className="my-10"
+        options={options}
+        data={data}
+      />
       <TeamStates teamsData={teamsData} selectedTeam={selectedTeam} />
       <ListedPlayers lastNames={teamsData[selectedTeam].y_arr.split(",")} />
     </div>
