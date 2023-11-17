@@ -1,34 +1,30 @@
 import { Link } from "react-router-dom";
-import { gamesData } from "../../data/data";
+import { useGameContext } from "../../context/GameContext";
 
 const Cards = () => {
+  const { games } = useGameContext();
+
   const data = [
     {
       img: "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI",
       details: (
-        <p>
-          {gamesData[0].sp_name} had excellent outing last night, check out his{" "}
-          <Link
-            className="text-blue-400"
-            to={`statistics/${gamesData[0]._id["$oid"]}`}
-          >
+        <div>
+          {games[0]?.sp_name} had excellent outing last night, check out his{" "}
+          <Link className="text-blue-400" to={`statistics/${games[0]?._id}`}>
             player page
           </Link>
-        </p>
+        </div>
       ),
     },
     {
       img: "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI",
       details: (
-        <p>
-          {gamesData[0].sp_name} had excellent outing last night, check out his{" "}
-          <Link
-            className="text-blue-400"
-            to={`statistics/${gamesData[0]._id["$oid"]}`}
-          >
+        <div>
+          {games[0]?.sp_name} had excellent outing last night, check out his{" "}
+          <Link className="text-blue-400" to={`statistics/${games[0]?._id}`}>
             player page
           </Link>
-        </p>
+        </div>
       ),
     },
   ];
@@ -47,7 +43,7 @@ const Cards = () => {
             src={cardData.img}
             alt="card_img"
           />
-          <p className="text-sm flex-1">{cardData.details}</p>
+          <div className="text-sm flex-1">{cardData.details}</div>
         </div>
       ))}
     </div>

@@ -1,4 +1,3 @@
-import { gamesData } from "../../data/data";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +11,7 @@ import { Bar } from "react-chartjs-2";
 import { useState } from "react";
 import TeamStates from "./TeamStates";
 import ListedPlayers from "./ListedPlayers";
+import { useGameContext } from "../../context/GameContext";
 
 ChartJS.register(
   CategoryScale,
@@ -22,60 +22,13 @@ ChartJS.register(
   Legend
 );
 
-const teamsData = gamesData.filter((game) => game.team === game.sp_name);
-
 const Teams = () => {
+  const { games } = useGameContext();
+
+  const teamsData = games?.filter((game) => game.team === game.sp_name);
   const [selectedTeam, setSelectedTeam] = useState(
     localStorage.getItem("selectedTeam") || 0
   );
-
-  // const items = [
-  //   {
-  //     key: "1",
-  //     label: <p className="text-lg">Teams</p>,
-  //     children: (
-  //       <div>
-  //         <Team
-  //           category={"Al East"}
-  //           setSelectedTeam={setSelectedTeam}
-  //           startIndex={0}
-  //           endIndex={5}
-  //         />
-  //         <Team
-  //           category={"Al Central"}
-  //           setSelectedTeam={setSelectedTeam}
-  //           startIndex={5}
-  //           endIndex={10}
-  //         />
-  //         <Team
-  //           category={"Al West"}
-  //           setSelectedTeam={setSelectedTeam}
-  //           startIndex={10}
-  //           endIndex={15}
-  //         />
-  //         <Team
-  //           category={"NL East"}
-  //           setSelectedTeam={setSelectedTeam}
-  //           startIndex={15}
-  //           endIndex={20}
-  //         />
-
-  //         <Team
-  //           category={"NL West"}
-  //           setSelectedTeam={setSelectedTeam}
-  //           startIndex={20}
-  //           endIndex={25}
-  //         />
-  //         <Team
-  //           category={"NL West"}
-  //           setSelectedTeam={setSelectedTeam}
-  //           startIndex={25}
-  //           endIndex={30}
-  //         />
-  //       </div>
-  //     ),
-  //   },
-  // ];
 
   const options = {
     indexAxis: "y",
@@ -188,21 +141,29 @@ const Teams = () => {
 
 export default Teams;
 
-const Team = ({ category, setSelectedTeam, startIndex, endIndex }) => (
-  <p className="font-semibold text-lg flex gap-2">
-    <p className="">{category} : </p>
-    {teamsData.slice(startIndex, endIndex).map((game, index) => (
-      <p
-        className="cursor-pointer underline"
-        onClick={() => {
-          setSelectedTeam(startIndex + index);
-          localStorage.setItem("selectedTeam", startIndex + index);
-        }}
-        key={game._id["$oid"]}
-      >
-        {game.team}
-        {index < 4 && ","}
-      </p>
-    ))}
-  </p>
-);
+const Team = ({ category, setSelectedTeam, startIndex, endIndex }) => {
+  const { games } = useGameContext();
+
+  console.log(games);
+
+  const teamsData = games?.filter((game) => game.team === game.sp_name);
+
+  return (
+    <p className="font-semibold text-lg flex gap-2">
+      <p className="">{category} : </p>
+      {teamsData?.slice(startIndex, endIndex).map((game, index) => (
+        <p
+          className="cursor-pointer underline"
+          onClick={() => {
+            setSelectedTeam(startIndex + index);
+            localStorage.setItem("selectedTeam", startIndex + index);
+          }}
+          key={game._id}
+        >
+          {game.team}
+          {index < 4 && ","}
+        </p>
+      ))}
+    </p>
+  );
+};

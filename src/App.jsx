@@ -7,6 +7,7 @@ import FaqPage from "./pages/FaqPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Teams from "./pages/Teams/Teams";
+import GameProvider from "./context/GameContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,7 +46,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <GameProvider>
+      <RouterProvider router={router} />
+    </GameProvider>
+  );
 };
 
 export default App;

@@ -1,43 +1,40 @@
 import { RiHome3Line, RiStarFill } from "react-icons/ri";
 import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
-import { filteredGameData, gamesData } from "../data/data";
 import { Button, Dropdown, Radio, Select } from "antd";
 import { useState } from "react";
-
-const options = filteredGameData.map((game) => {
-  return {
-    key: game._id["$oid"],
-    value: game.sp_name,
-    label: (
-      <Link
-        to={`/statistics/${game._id["$oid"]}`}
-        className="flex justify-between"
-      >
-        <p>{game.team}</p>
-        <p>{game.sp_name}</p>
-      </Link>
-    ),
-  };
-});
-
-const searchOptions = gamesData.map((game) => {
-  return {
-    key: game._id["$oid"],
-    value: game.sp_name,
-    label: (
-      <Link
-        to={`/statistics/${game._id["$oid"]}`}
-        className="flex justify-between"
-      >
-        <p>{game.team}</p>
-        <p>{game.sp_name}</p>
-      </Link>
-    ),
-  };
-});
+import { useGameContext } from "../context/GameContext";
+import { gamesFilter } from "../data/data";
 
 const Statistics = () => {
+  const { games } = useGameContext();
+
+  const options = games?.filter(gamesFilter).map((game) => {
+    return {
+      key: game._id,
+      value: game.sp_name,
+      label: (
+        <Link to={`/statistics/${game._id}`} className="flex justify-between">
+          <p>{game.team}</p>
+          <p>{game.sp_name}</p>
+        </Link>
+      ),
+    };
+  });
+
+  const searchOptions = games?.map((game) => {
+    return {
+      key: game._id,
+      value: game.sp_name,
+      label: (
+        <Link to={`/statistics/${game._id}`} className="flex justify-between">
+          <p>{game.team}</p>
+          <p>{game.sp_name}</p>
+        </Link>
+      ),
+    };
+  });
+
   const onSearchSelect = (value) => {
     console.log(`selected ${value}`);
   };
@@ -51,7 +48,9 @@ const Statistics = () => {
 
   const { id } = useParams();
 
-  const data = gamesData.find((team) => team._id["$oid"] === id);
+  const data = games?.find((team) => team._id === id);
+
+  console.log(games);
 
   const [selectedButton, setSelectedButton] = useState(1);
   const onChange = (e) => {

@@ -1,15 +1,17 @@
 import { Table } from "antd";
-import { gamesData } from "../../data/data";
 import { useNavigate } from "react-router-dom";
+import { useGameContext } from "../../context/GameContext";
 
 const ListedPlayers = ({ lastNames }) => {
   const navigate = useNavigate();
 
-  const tableData = gamesData
+  const { games } = useGameContext();
+
+  const tableData = games
     .filter((game) => lastNames.includes(game.sp_name.split(" ").pop()))
     .map((data, i) => {
       return {
-        id: data._id["$oid"],
+        id: data._id,
         serial: i + 1,
         name: <div>{data.sp_name}</div>,
         team: data.team,

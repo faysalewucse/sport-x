@@ -6,22 +6,24 @@ import {
   Legend,
 } from "chart.js";
 import { Bubble } from "react-chartjs-2";
-import { gamesData } from "../data/data";
 import { Radio, Table } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGameContext } from "../context/GameContext";
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
 const ScatterPlot = () => {
   const navigate = useNavigate();
 
+  const { games } = useGameContext();
+
   const [selectedValue, setSelectedValue] = useState("AL_yes");
   const onChange = (e) => {
     setSelectedValue(e.target.value);
   };
 
-  const allData = gamesData
+  const allData = games
     .map((data, i) => {
       if (selectedValue !== "all" && data.sctr_arr[0] !== selectedValue) {
         return null;
@@ -69,7 +71,7 @@ const ScatterPlot = () => {
     datasets: allData,
   };
 
-  const tableData = gamesData
+  const tableData = games
 
     .map((data, i) => {
       if (selectedValue !== "all" && data.sctr_arr[0] !== selectedValue) {
@@ -77,7 +79,7 @@ const ScatterPlot = () => {
       }
 
       return {
-        id: data._id["$oid"],
+        id: data._id,
         serial: selectedValue === "all" ? data.sctr_arr[3] : data.sctr_arr[1],
         name: (
           <div

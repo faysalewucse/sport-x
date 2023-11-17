@@ -2,19 +2,18 @@ import { Link } from "react-router-dom";
 import Cards from "./Cards";
 import Games from "./Games";
 import { RiMenu3Fill } from "react-icons/ri";
-import { gamesData } from "../../data/data";
+import { useGameContext } from "../../context/GameContext";
 
 const HomePage = () => {
+  const { games } = useGameContext();
+
   return (
     <div className="p-3">
       <div>
         <b>Welcome back</b>
         <p>
-          {gamesData[0].sp_name} had excellent outing last night, check out his{" "}
-          <Link
-            className="text-blue-400"
-            to={`statistics/${gamesData[0]._id["$oid"]}`}
-          >
+          {games[0]?.sp_name} had excellent outing last night, check out his{" "}
+          <Link className="text-blue-400" to={`statistics/${games[0]?._id}`}>
             player page
           </Link>
         </p>
