@@ -13,7 +13,7 @@ const HomePage = () => {
         <b>Welcome back</b>
         <p>
           {games[0]?.sp_name} had excellent outing last night, check out his{" "}
-          <Link className="text-blue-400" to={`statistics/${games[0]?._id}`}>
+          <Link className="text-blue-400" to={`statistics/${games[0]?.id}`}>
             player page
           </Link>
         </p>

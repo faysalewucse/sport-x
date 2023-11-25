@@ -11,10 +11,10 @@ const Statistics = () => {
 
   const options = games?.filter(gamesFilter).map((game) => {
     return {
-      key: game._id,
+      key: game.id,
       value: game.sp_name,
       label: (
-        <Link to={`/statistics/${game._id}`} className="flex justify-between">
+        <Link to={`/statistics/${game.id}`} className="flex justify-between">
           <p>{game.team}</p>
           <p>{game.sp_name}</p>
         </Link>
@@ -24,10 +24,10 @@ const Statistics = () => {
 
   const searchOptions = games?.map((game) => {
     return {
-      key: game._id,
+      key: game.id,
       value: game.sp_name,
       label: (
-        <Link to={`/statistics/${game._id}`} className="flex justify-between">
+        <Link to={`/statistics/${game.id}`} className="flex justify-between">
           <p>{game.team}</p>
           <p>{game.sp_name}</p>
         </Link>
@@ -48,7 +48,7 @@ const Statistics = () => {
 
   const { id } = useParams();
 
-  const data = games?.find((team) => team._id === id);
+  const data = games?.find((team) => team.id === id);
 
   console.log(games);
 

@@ -79,7 +79,7 @@ const ScatterPlot = () => {
       }
 
       return {
-        id: data._id,
+        id: data.id,
         serial: selectedValue === "all" ? data.sctr_arr[3] : data.sctr_arr[1],
         name: (
           <div

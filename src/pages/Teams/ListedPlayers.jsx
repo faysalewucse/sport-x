@@ -11,7 +11,7 @@ const ListedPlayers = ({ lastNames }) => {
     .filter((game) => lastNames.includes(game.sp_name.split(" ").pop()))
     .map((data, i) => {
       return {
-        id: data._id,
+        id: data.id,
         serial: i + 1,
         name: <div>{data.sp_name}</div>,
         team: data.team,

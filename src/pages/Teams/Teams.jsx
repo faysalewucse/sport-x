@@ -158,7 +158,7 @@ const Team = ({ category, setSelectedTeam, startIndex, endIndex }) => {
             setSelectedTeam(startIndex + index);
             localStorage.setItem("selectedTeam", startIndex + index);
           }}
-          key={game._id}
+          key={game.id}
         >
           {game.team}
           {index < 4 && ","}
