@@ -79,7 +79,7 @@ const Statistics = () => {
         </div>
 
         <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
-          <p className="">Search by L. Name</p>
+          <p className="">Search by ID</p>
           <Select
             showSearch
             placeholder="Enter Last Name"
