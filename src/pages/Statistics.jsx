@@ -25,11 +25,12 @@ const Statistics = () => {
   const searchOptions = games?.map((game) => {
     return {
       key: game.id,
-      value: game.sp_name,
+      value: game.sp_id,
       label: (
         <Link to={`/statistics/${game.id}`} className="flex justify-between">
           <p>{game.team}</p>
           <p>{game.sp_name}</p>
+          <p>{game.sp_id}</p>
         </Link>
       ),
     };
@@ -38,13 +39,6 @@ const Statistics = () => {
   const onSearchSelect = (value) => {
     console.log(`selected ${value}`);
   };
-
-  const filterOption = (input, option) =>
-    (option?.value ?? "")
-      .toLowerCase()
-      .split(" ")
-      .pop()
-      .includes(input.toLowerCase());
 
   const { id } = useParams();
 
@@ -57,6 +51,14 @@ const Statistics = () => {
     setSelectedButton(e.target.value);
   };
 
+  const getTeamsName = (data) => {
+    let teams = "";
+    if (data[2] != "x") teams += `${data[2]}`;
+    if (data[3] != "x") teams += `, ${data[3]}`;
+    if (data[4] != "x") teams += `, ${data[4]}`;
+
+    return teams;
+  };
   return (
     <div className="p-3 relative">
       <div className="my-5">
@@ -82,11 +84,13 @@ const Statistics = () => {
           <p className="">Search by ID</p>
           <Select
             showSearch
-            placeholder="Enter Last Name"
+            placeholder="Enter ID"
             optionFilterProp="children"
             onChange={onSearchSelect}
             className="flex-1"
-            filterOption={filterOption}
+            filterOption={(input, option) =>
+              option.value.toString().includes(input.toString())
+            }
             options={searchOptions}
           />
         </div>
@@ -117,6 +121,11 @@ const Statistics = () => {
           <b>
             W/L Record: {data.wx_record} AWX: {data.awx}
           </b>
+          <h1 className="font-semibold text-green-600">
+            {data.sp_name} pitched for {data.Trade_data[1]}{" "}
+            {data.Trade_data[1] > 1 ? `teams` : `team`} in 2023:{" "}
+            {getTeamsName(data.Trade_data)}
+          </h1>
         </div>
         <h1 className="font-bold my-3">Analytics</h1>
         <div className="border p-2 rounded-lg">
