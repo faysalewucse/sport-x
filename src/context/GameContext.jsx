@@ -12,13 +12,13 @@ const GameProvider = ({ children }) => {
   const [games, setGames] = useState([]);
   const [filteredGames, setFilteredGames] = useState([]);
 
+  console.log(import.meta.env.VITE_BASE_URL);
+
   useEffect(() => {
     // Fetch data from the URL
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://sportx-simple-server.onrender.com/api/games"
-        );
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
