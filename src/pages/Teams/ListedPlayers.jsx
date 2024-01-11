@@ -2,13 +2,17 @@ import { Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGameContext } from "../../context/GameContext";
 
-const ListedPlayers = ({ lastNames }) => {
+const ListedPlayers = ({ lastNames, selectedTeam }) => {
   const navigate = useNavigate();
 
   const { games } = useGameContext();
 
   const tableData = games
-    .filter((game) => lastNames.includes(game.sp_name.split(" ").pop()))
+    .filter(
+      (game) =>
+        lastNames.includes(game.sp_name.split(" ").pop()) &&
+        game.team === selectedTeam
+    )
     .map((data, i) => {
       return {
         id: data.id,

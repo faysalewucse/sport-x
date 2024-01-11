@@ -134,7 +134,10 @@ const Teams = () => {
         data={data}
       />
       <TeamStates teamsData={teamsData} selectedTeam={selectedTeam} />
-      <ListedPlayers lastNames={teamsData[selectedTeam].y_arr.split(",")} />
+      <ListedPlayers
+        selectedTeam={teamsData[selectedTeam].team}
+        lastNames={teamsData[selectedTeam].y_arr.split(",")}
+      />
     </div>
   );
 };

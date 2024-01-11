@@ -42,9 +42,14 @@ const Statistics = () => {
 
   const { id } = useParams();
 
+  console.log(id);
+
   const data = games?.find((team) => team.id === id);
 
-  console.log(games);
+  const data2 = games?.filter((team) => team.sp_id === data.sp_id);
+
+  const allTeam = data2.map((d) => d.team);
+  let click = "";
 
   const [selectedButton, setSelectedButton] = useState(1);
   const onChange = (e) => {
@@ -52,12 +57,27 @@ const Statistics = () => {
   };
 
   const getTeamsName = (data) => {
-    let teams = "";
-    if (data[2] != "x") teams += `${data[2]}`;
-    if (data[3] != "x") teams += `, ${data[3]}`;
-    if (data[4] != "x") teams += `, ${data[4]}`;
+    const clickableTeams = [];
 
-    return teams;
+    for (let i = 2; i <= 4; i++) {
+      if (data[i] !== "x") {
+        clickableTeams.push(
+          <Link
+            className="text-black underline"
+            key={data[i]}
+            to={`/team/${data[i]}`}
+          >
+            {data[i]}
+          </Link>
+        );
+      }
+    }
+
+    click = allTeam.filter(
+      (team) => team !== data[2] && team !== data[3] && team !== data[4]
+    );
+
+    return clickableTeams;
   };
   return (
     <div className="p-3 relative">
@@ -124,7 +144,13 @@ const Statistics = () => {
           <h1 className="font-semibold text-green-600">
             {data.sp_name} pitched for {data.Trade_data[1]}{" "}
             {data.Trade_data[1] > 1 ? `teams` : `team`} in 2023:{" "}
-            {getTeamsName(data.Trade_data)}
+            {getTeamsName(data.Trade_data).reduce((prev, curr) => [
+              prev,
+              ", ",
+              curr,
+            ])}{" "}
+            For Total clicks{" "}
+            <span className="underline text-black">{click}</span>
           </h1>
         </div>
         <h1 className="font-bold my-3">Analytics</h1>
