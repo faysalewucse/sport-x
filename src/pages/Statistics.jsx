@@ -7,6 +7,9 @@ import { useGameContext } from "../context/GameContext";
 import { gamesFilter } from "../data/data";
 
 const Statistics = () => {
+  const { id } = useParams();
+  const [teamName, setTeamName] = useState(id.split("_")[1]);
+
   const { games } = useGameContext();
 
   const options = games?.filter(gamesFilter).map((game) => {
@@ -40,15 +43,21 @@ const Statistics = () => {
     console.log(`selected ${value}`);
   };
 
-  const { id } = useParams();
-
   console.log(id);
 
-  const data = games?.find((team) => team.id === id);
+  console.log(teamName);
 
-  const data2 = games?.filter((team) => team.sp_id === data.sp_id);
+  const data = games?.find(
+    (team) =>
+      team.sp_id2.split("_")[0] === id.split("_")[0] && team.team == teamName
+  );
 
-  const allTeam = data2.map((d) => d.team);
+  const data2 = games?.filter(
+    (team) => team.sp_id2.split("_")[0] == id.split("_")[0]
+  );
+
+  const allTeam = data2.map((d) => d.sp_id2.split("_")[2]);
+
   let click = "";
 
   const [selectedButton, setSelectedButton] = useState(1);
@@ -62,13 +71,13 @@ const Statistics = () => {
     for (let i = 2; i <= 4; i++) {
       if (data[i] !== "x") {
         clickableTeams.push(
-          <Link
-            className="text-black underline"
+          <span
+            onClick={() => setTeamName(data[i])}
+            className="cursor-pointer text-black underline"
             key={data[i]}
-            to={`/team/${data[i]}`}
           >
             {data[i]}
-          </Link>
+          </span>
         );
       }
     }
@@ -148,9 +157,15 @@ const Statistics = () => {
               prev,
               ", ",
               curr,
-            ])}{" "}
+            ])}
+            {". "}
             For Total clicks{" "}
-            <span className="underline text-black">{click}</span>
+            <span
+              onClick={() => setTeamName(click)}
+              className="cursor-pointer underline text-black"
+            >
+              {click}
+            </span>
           </h1>
         </div>
         <h1 className="font-bold my-3">Analytics</h1>

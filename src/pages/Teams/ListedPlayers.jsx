@@ -15,7 +15,7 @@ const ListedPlayers = ({ lastNames, selectedTeam }) => {
     )
     .map((data, i) => {
       return {
-        id: data.id,
+        sp_id2: data.sp_id2,
         serial: i + 1,
         name: <div>{data.sp_name}</div>,
         team: data.team,
@@ -65,7 +65,9 @@ const ListedPlayers = ({ lastNames, selectedTeam }) => {
         onRow={(record) => {
           return {
             onClick: () => {
-              navigate(`/statistics/${record.id}`);
+              navigate(
+                `/statistics/${record.sp_id2.split("_")[0]}_${record.team}`
+              );
             },
           };
         }}
