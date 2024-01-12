@@ -30,7 +30,11 @@ const Statistics = () => {
       key: game.id,
       value: game.sp_id,
       label: (
-        <Link to={`/statistics/${game.id}`} className="flex justify-between">
+        <Link
+          onClick={() => setTeamName(game.team)}
+          to={`/statistics/${game.sp_id2.split("_")[0]}_${game.team}`}
+          className="flex justify-between"
+        >
           <p>{game.team}</p>
           <p>{game.sp_name}</p>
           <p>{game.sp_id}</p>
@@ -48,8 +52,8 @@ const Statistics = () => {
   console.log(teamName);
 
   const data = games?.find(
-    (team) =>
-      team.sp_id2.split("_")[0] === id.split("_")[0] && team.team == teamName
+    (game) =>
+      game.sp_id2.split("_")[0] === id.split("_")[0] && game.team == teamName
   );
 
   const data2 = games?.filter(
