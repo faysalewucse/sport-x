@@ -28,7 +28,7 @@ const Statistics = () => {
   const searchOptions = games?.map((game) => {
     return {
       key: game.id,
-      value: game.sp_id,
+      value: game.sp_name,
       label: (
         <Link
           onClick={() => setTeamName(game.team)}
@@ -47,6 +47,12 @@ const Statistics = () => {
     console.log(`selected ${value}`);
   };
 
+  const filterOption = (input, option) =>
+    (option?.value ?? "")
+      .toLowerCase()
+      .split(" ")
+      .pop()
+      .includes(input.toLowerCase());
   console.log(id);
 
   console.log(teamName);
@@ -114,16 +120,14 @@ const Statistics = () => {
         </div>
 
         <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
-          <p className="">Search by ID</p>
+          <p className="">Search by L. Name</p>
           <Select
             showSearch
-            placeholder="Enter ID"
+            placeholder="Enter Last Name"
             optionFilterProp="children"
             onChange={onSearchSelect}
             className="flex-1"
-            filterOption={(input, option) =>
-              option.value.toString().includes(input.toString())
-            }
+            filterOption={filterOption}
             options={searchOptions}
           />
         </div>
