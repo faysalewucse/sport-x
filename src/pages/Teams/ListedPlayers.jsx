@@ -8,10 +8,15 @@ const ListedPlayers = ({ lastNames, selectedTeam }) => {
   const { games } = useGameContext();
 
   const tableData = games
-    .filter(
-      (game) =>
-        lastNames.includes(game.sp_name.split(" ").pop()) &&
-        game.team === selectedTeam
+    .filter((game) =>
+      lastNames.some(
+        (name) =>
+          game.sp_name
+            .split(" ")
+            .pop()
+            .toLowerCase()
+            .includes(name.toLowerCase()) && game.team === selectedTeam
+      )
     )
     .map((data, i) => {
       return {
