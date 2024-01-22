@@ -5,9 +5,11 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { useGameContext } from "../../context/GameContext";
 
 const HomePage = () => {
-  const { games } = useGameContext();
+  const { games, loading } = useGameContext();
 
-  return (
+  return loading ? (
+    <>Loading...</>
+  ) : (
     <div className="p-3">
       <div>
         <b>Welcome back</b>

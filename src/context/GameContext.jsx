@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { ClimbingBoxLoader } from "react-spinners";
 
 // Create a context
 export const GameContext = createContext();
@@ -46,7 +47,18 @@ const GameProvider = ({ children }) => {
   return (
     // Provide the fetched data through the context
     <GameContext.Provider value={value}>
-      {!loading && children}
+      {loading ? (
+        <div className="min-h-screen flex justify-center items-center">
+          <ClimbingBoxLoader
+            loading={loading}
+            size={10}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      ) : (
+        children
+      )}
     </GameContext.Provider>
   );
 };
