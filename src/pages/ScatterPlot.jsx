@@ -154,14 +154,7 @@ const ScatterPlot = () => {
         <Radio value="NL_yes">SCTR_NL</Radio>
         <Radio value="all">All Pitchers</Radio>
       </Radio.Group>
-      {/* {selectedValue === "all" && (
-        <Select
-        defaultValue="1"
-        className="w-40"
-        onChange={handleChange}
-        options={categories}
-        />
-      )} */}
+
       {/* Scatter Plot */}
       <Bubble options={options} data={data} />
 

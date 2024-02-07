@@ -5,17 +5,19 @@ import { useGameContext } from "../../context/GameContext";
 const ListedPlayers = ({ lastNames, selectedTeam }) => {
   const navigate = useNavigate();
 
-  const { games } = useGameContext();
+  const { season, games } = useGameContext();
 
   const tableData = games
-    .filter((game) =>
-      lastNames.some(
+    ?.filter((game) =>
+      lastNames?.some(
         (name) =>
           game.sp_name
             .split(" ")
             .pop()
             .toLowerCase()
-            .includes(name.toLowerCase()) && game.team === selectedTeam
+            .includes(name.toLowerCase()) &&
+          game.team === selectedTeam &&
+          game.sea == season
       )
     )
     .map((data, i) => {

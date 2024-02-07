@@ -1,5 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 import { ClimbingBoxLoader } from "react-spinners";
+import CustomLoader from "../components/CustomLoader";
 
 // Create a context
 export const GameContext = createContext();
@@ -9,9 +11,9 @@ export function useGameContext() {
 }
 
 const GameProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
-  const [filteredGames, setFilteredGames] = useState([]);
+  const [season, setSeason] = useState(2024);
 
   console.log(import.meta.env.VITE_BASE_URL);
 
@@ -19,13 +21,12 @@ const GameProvider = ({ children }) => {
     // Fetch data from the URL
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`${import.meta.env.VITE_BASE_URL}`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-
-        console.log(data);
 
         setGames(data); // Set the fetched data to the state
       } catch (error) {
@@ -40,25 +41,14 @@ const GameProvider = ({ children }) => {
 
   const value = {
     games,
-    filteredGames,
     loading,
+    season,
+    setSeason,
   };
 
   return (
-    // Provide the fetched data through the context
     <GameContext.Provider value={value}>
-      {loading ? (
-        <div className="min-h-screen flex justify-center items-center">
-          <ClimbingBoxLoader
-            loading={loading}
-            size={10}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
-      ) : (
-        children
-      )}
+      {loading ? <CustomLoader loading={loading} /> : children}
     </GameContext.Provider>
   );
 };

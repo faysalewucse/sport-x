@@ -26,6 +26,7 @@ const Teams = () => {
   const { games } = useGameContext();
 
   const teamsData = games?.filter((game) => game.team === game.sp_name);
+
   const [selectedTeam, setSelectedTeam] = useState(
     localStorage.getItem("selectedTeam") || 0
   );
@@ -53,7 +54,6 @@ const Teams = () => {
         },
         display: true,
         color: "black",
-
         text: teamsData[selectedTeam].gid,
       },
       layout: {

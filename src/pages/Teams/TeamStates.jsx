@@ -1,6 +1,7 @@
 import { Input } from "antd";
 
 const TeamStates = ({ teamsData, selectedTeam }) => {
+  console.log(teamsData);
   return (
     <div className="font-semibold">
       <h6 className="text-center text-xl mb-5">Team Stats</h6>
