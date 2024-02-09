@@ -16,11 +16,11 @@ const HomePage = () => {
   const fetchFirstGame = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${baseUrl}/first-game`);
+      const { data } = await axios.get(`${baseUrl}/first`);
       setFirstGame(data.firstGame);
       setPairedTeams(data.pairedTeams);
     } catch (error) {
-      toast.error("Something went wrong!");
+      toast.error("Something went wrong! homepgae");
     } finally {
       setLoading(false);
     }
@@ -37,7 +37,7 @@ const HomePage = () => {
       <div>
         <b>Welcome back</b>
         <p>
-          {firstGame.sp_name} had excellent outing last night, check out his{" "}
+          {firstGame?.sp_name} had excellent outing last night, check out his{" "}
           <Link
             className="text-blue-400"
             to={`statistics/${firstGame?.sp_id}_${firstGame?.team}`}
