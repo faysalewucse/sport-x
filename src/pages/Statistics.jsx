@@ -32,15 +32,22 @@ const Statistics = () => {
     fetchGames();
   }, []);
 
-  const [teamName, setTeamName] = useState(id.split("_")[1]);
-  const [season, setSeason] = useState(2024);
+  const chartData = games?.find(
+    (game) =>
+      game.sp_id2 === id &&
+      game.team == id.split("_")[2] &&
+      game.sea == `20${id.split("_")[1]}` // 2000 for 2024/2023
+  );
 
   const options = games?.filter(gamesFilter).map((game) => {
     return {
       key: game.id,
       value: game.sp_name,
       label: (
-        <Link to={`/statistics/${game.id}`} className="flex justify-between">
+        <Link
+          to={`/statistics/${game.sp_id2}`}
+          className="flex justify-between"
+        >
           <p>{game.team}</p>
           <p>{game.sp_name}</p>
         </Link>
@@ -54,11 +61,7 @@ const Statistics = () => {
       value: game.sp_name,
       label: (
         <Link
-          onClick={() => {
-            setTeamName(game.team);
-            setSeason(game.sea);
-          }}
-          to={`/statistics/${game.sp_id2.split("_")[0]}_${game.team}`}
+          to={`/statistics/${game.sp_id2}`}
           className="flex justify-between"
         >
           <p>{game.team}</p>
@@ -81,13 +84,6 @@ const Statistics = () => {
       .pop()
       .includes(input.toLowerCase());
 
-  const chartData = games?.find(
-    (game) =>
-      game.sp_id2.split("_")[0] === id.split("_")[0] &&
-      game.team == teamName &&
-      game.sea === season
-  );
-
   const allSeasonData = games?.filter(
     (game) => game.sp_id2.split("_")[0] == id.split("_")[0]
   );
@@ -103,8 +99,8 @@ const Statistics = () => {
   ) : (
     <div className="p-3 relative">
       <div className="my-5">
-        <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
-          <p className="w-fit">Today&apos;s Pitchers</p>
+        <p className="w-fit">Today&apos;s Pitchers</p>
+        <div className="flex items-center rounded-md gap-2 mb-2 bg-black/90 text-white p-1">
           <Dropdown
             className="flex-1"
             menu={{ items: options }}
@@ -117,12 +113,13 @@ const Statistics = () => {
             >
               <p>{chartData?.team}</p>
               <p>{chartData?.sp_name}</p>
+              <p>{chartData?.sea}</p>
             </Button>
           </Dropdown>
         </div>
 
+        <p className="">Search by L. Name</p>
         <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
-          <p className="">Search by L. Name</p>
           <Select
             showSearch
             placeholder="Enter Last Name"
@@ -161,10 +158,9 @@ const Statistics = () => {
             W/L Record: {chartData?.wx_record} AWX: {chartData?.awx}
           </b>
           <SeasonData
+            playerId={id.split("_")[0]}
             chartData={chartData}
             data={allSeasonData}
-            setSelectedTeam={setTeamName}
-            setSelectedSeason={setSeason}
           />
         </div>
         <h1 className="font-bold my-3">Analytics</h1>
@@ -192,12 +188,7 @@ const Statistics = () => {
 
 export default Statistics;
 
-const SeasonData = ({
-  chartData,
-  data,
-  setSelectedTeam,
-  setSelectedSeason,
-}) => {
+const SeasonData = ({ playerId, chartData, data }) => {
   const filteredDataBySeason = {};
 
   data.forEach((obj) => {
@@ -208,18 +199,12 @@ const SeasonData = ({
       filteredDataBySeason[season] = [];
     }
 
-    if (tradeData.length > 0) {
+    if (tradeData.length > 0 && filteredDataBySeason[season].length === 0) {
       filteredDataBySeason[season].push(...tradeData);
     }
   });
 
-  const handleTeamClick = (teamName, season) => {
-    setSelectedTeam(teamName);
-    setSelectedSeason(season);
-  };
-  const allTeam = [];
-
-  console.log(data);
+  let allTeam = {};
 
   data.forEach((game) => {
     const key = game.sea;
@@ -230,39 +215,65 @@ const SeasonData = ({
   });
 
   const getTeamsName = (season) => {
-    const forTotalClicksTeams = [];
+    const pitchedTeams = filteredDataBySeason[season].map(
+      (teamName) => teamName
+    );
 
-    console.log(allTeam);
-
-    const pitchedTeams = filteredDataBySeason[season].map((teamName, index) => {
-      delete allTeam[season][teamName];
-
-      return (
-        <span
-          className="cursor-pointer underline"
-          key={index}
-          onClick={() => handleTeamClick(teamName, season)}
-        >
-          {teamName}
-        </span>
-      );
-    });
+    const forTotalClicksTeams = allTeam[season].filter(
+      (team) => !pitchedTeams.includes(team)
+    );
 
     return { pitchedTeams, forTotalClicksTeams };
   };
 
   return (
     <div>
-      {Object.keys(filteredDataBySeason).map((season) => (
-        <div key={season}>
-          {chartData?.sp_name} pitched for{" "}
-          <span className="text-black">{chartData?.Trade_data[1]} </span>
-          {chartData?.Trade_data[1] > 1 ? `teams` : `team`} in{" "}
-          <span className="text-indigo-600">{season}</span>:{" "}
-          {getTeamsName(season).pitchedTeams}
-          {". "}For total clicks {getTeamsName(season).forTotalClicksTeams}
-        </div>
-      ))}
+      {Object.keys(filteredDataBySeason)
+        .reverse()
+        .map((season) => (
+          <div key={season}>
+            {chartData?.sp_name} pitched for{" "}
+            <span className="text-black">{chartData?.Trade_data[1]} </span>
+            {chartData?.Trade_data[1] > 1 ? `teams` : `team`} in{" "}
+            <span className="text-green-600 font-semibold">{season}</span>:{" "}
+            {getTeamsName(season).pitchedTeams.map((teamName, index) => (
+              <Link
+                to={`/statistics/${playerId}_${season.substring(
+                  2
+                )}_${teamName}`}
+                key={index}
+              >
+                <span className="text-indigo-600 font-semibold cursor-pointer underline">
+                  {teamName}
+                </span>
+                {index < filteredDataBySeason[season].length - 1 ? ", " : ""}
+              </Link>
+            ))}
+            {getTeamsName(season).forTotalClicksTeams.length > 0 && (
+              <span className="">
+                {". "}For total clicks{" "}
+                {getTeamsName(season).forTotalClicksTeams.map(
+                  (teamName, index) => (
+                    <Link
+                      to={`/statistics/${playerId}_${season.substring(
+                        2
+                      )}_${teamName}`}
+                      key={index}
+                    >
+                      <span className="cursor-pointer underline text-indigo-600 font-semibold">
+                        {teamName}
+                      </span>
+                      {index <
+                      getTeamsName(season).forTotalClicksTeams.length - 1
+                        ? ", "
+                        : ""}
+                    </Link>
+                  )
+                )}
+              </span>
+            )}
+          </div>
+        ))}
     </div>
   );
 };

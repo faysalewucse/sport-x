@@ -72,9 +72,7 @@ const ListedPlayers = ({ lastNames, selectedTeam }) => {
         onRow={(record) => {
           return {
             onClick: () => {
-              navigate(
-                `/statistics/${record.sp_id2.split("_")[0]}_${record.team}`
-              );
+              navigate(`/statistics/${record.sp_id2}`);
             },
           };
         }}

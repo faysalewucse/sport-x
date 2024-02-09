@@ -35,7 +35,7 @@ function MixedChart({ x, y, barColor, awx_arr, mov_avg_arr, selectedButton }) {
   const labels = x;
 
   const barColors = barColor
-    .split(",")
+    ?.split(",")
     .map((color) => (color === "g" ? "green" : "red"));
 
   const data = {
@@ -52,7 +52,7 @@ function MixedChart({ x, y, barColor, awx_arr, mov_avg_arr, selectedButton }) {
         },
         borderDash: [5, 5],
         data:
-          selectedButton === 1 ? awx_arr.split(",") : mov_avg_arr.split(","),
+          selectedButton === 1 ? awx_arr?.split(",") : mov_avg_arr?.split(","),
       },
       {
         type: "bar",
