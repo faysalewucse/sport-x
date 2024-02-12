@@ -6,7 +6,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bubble } from "react-chartjs-2";
-import { Radio, Table } from "antd";
+import { Radio, Select, Table } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGameContext } from "../context/GameContext";
@@ -19,13 +19,18 @@ const ScatterPlot = () => {
   const { games } = useGameContext();
 
   const [selectedValue, setSelectedValue] = useState("AL_yes");
+  const [selectedSeason, setSelectedSeason] = useState("sctr_arr_24");
+
   const onChange = (e) => {
     setSelectedValue(e.target.value);
   };
 
   const allData = games
     .map((data, i) => {
-      if (selectedValue !== "all" && data.sctr_arr[0] !== selectedValue) {
+      if (
+        selectedValue !== "all" &&
+        data[selectedSeason][0] !== selectedValue
+      ) {
         return null;
       }
 
@@ -34,11 +39,11 @@ const ScatterPlot = () => {
         backgroundColorOpacity: 0.5,
         backgroundColor:
           selectedValue !== "all"
-            ? data.sctr_arr[1] === 1
+            ? data[selectedSeason][1] === 1
               ? "rgba(255, 0, 0, 0.5)"
-              : data.sctr_arr[1] === 2
+              : data[selectedSeason][1] === 2
               ? "rgba(3, 138, 255, 0.5)"
-              : data.sctr_arr[1] === 3
+              : data[selectedSeason][1] === 3
               ? "rgba(46, 204, 113, 0.5)"
               : "gray"
             : i >= 0 && i <= 19
@@ -53,11 +58,11 @@ const ScatterPlot = () => {
             x: data.twx,
             y: data.awx,
             r:
-              data.sctr_arr[1] === 1 && selectedValue !== "all"
+              data[selectedSeason][1] === 1 && selectedValue !== "all"
                 ? parseInt(data.cy_p / 15) * 2
-                : data.sctr_arr[1] === 2 && selectedValue !== "all"
+                : data[selectedSeason][1] === 2 && selectedValue !== "all"
                 ? parseInt(data.cy_p / 15) * 1.67
-                : data.sctr_arr[1] === 3 && selectedValue !== "all"
+                : data[selectedSeason][1] === 3 && selectedValue !== "all"
                 ? parseInt(data.cy_p / 15) * 1.33
                 : parseInt(data.cy_p / 15),
           },
@@ -71,16 +76,26 @@ const ScatterPlot = () => {
     datasets: allData,
   };
 
-  const tableData = games
+  const getSctr = () => {
+    return selectedSeason === "sctr_arr_23" ? "23_Y" : "24_Y";
+  };
 
+  const tableData = games
+    .filter((game) => game.sctr_y === getSctr())
     .map((data, i) => {
-      if (selectedValue !== "all" && data.sctr_arr[0] !== selectedValue) {
+      if (
+        selectedValue !== "all" &&
+        data[selectedSeason][0] !== selectedValue
+      ) {
         return null;
       }
 
       return {
         sp_id2: data.sp_id2,
-        serial: selectedValue === "all" ? data.sctr_arr[3] : data.sctr_arr[1],
+        serial:
+          selectedValue === "all"
+            ? data[selectedSeason][3]
+            : data[selectedSeason][1],
         name: (
           <div
             className={`${
@@ -147,8 +162,22 @@ const ScatterPlot = () => {
     },
   };
 
+  const handleSeason = (value) => {
+    setSelectedSeason(value);
+  };
+
   return (
     <div className="p-5">
+      <Select
+        className="mr-5"
+        defaultValue="sctr_arr_24"
+        style={{ width: 120 }}
+        onChange={handleSeason}
+        options={[
+          { value: "sctr_arr_24", label: "2024" },
+          { value: "sctr_arr_23", label: "2023" },
+        ]}
+      />
       <Radio.Group className="mb-5" onChange={onChange} value={selectedValue}>
         <Radio value="AL_yes">SCTR_AL</Radio>
         <Radio value="NL_yes">SCTR_NL</Radio>
