@@ -78,12 +78,20 @@ const Teams = () => {
     },
   };
 
+  console.log(teamsData[selectedTeam].cy_p);
+
   const data = {
     labels: teamsData[selectedTeam].y_arr.split(","),
     datasets: [
       {
         data: teamsData[selectedTeam].x_arr.split(","),
-        backgroundColor: ["gray"],
+        backgroundColor:
+          teamsData[selectedTeam].cy_p <= 40
+            ? ["red"]
+            : teamsData[selectedTeam].cy_p > 40 &&
+              teamsData[selectedTeam].cy_p <= 60
+            ? ["grey"]
+            : ["green"],
       },
     ],
   };
