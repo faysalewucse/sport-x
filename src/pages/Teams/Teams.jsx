@@ -60,7 +60,7 @@ const Teams = () => {
         },
         display: true,
         color: "black",
-        text: teamsData[selectedTeam].gid,
+        text: teamsData[selectedTeam]?.gid,
       },
       layout: {
         padding: 5,
@@ -78,20 +78,16 @@ const Teams = () => {
     },
   };
 
-  console.log(teamsData[selectedTeam].cy_p);
-
   const data = {
-    labels: teamsData[selectedTeam].y_arr.split(","),
+    labels: teamsData[selectedTeam]?.y_arr.split(","),
     datasets: [
       {
-        data: teamsData[selectedTeam].x_arr.split(","),
-        backgroundColor:
-          teamsData[selectedTeam].cy_p <= 40
-            ? ["red"]
-            : teamsData[selectedTeam].cy_p > 40 &&
-              teamsData[selectedTeam].cy_p <= 60
-            ? ["grey"]
-            : ["green"],
+        data: teamsData[selectedTeam]?.x_arr.split(","),
+        backgroundColor: teamsData[selectedTeam]?.mov_ave_arr
+          .split(",")
+          .map((char) =>
+            char === "r" ? "red" : char === "g" ? "green" : "grey"
+          ),
       },
     ],
   };
@@ -118,47 +114,41 @@ const Teams = () => {
           Teams : {teamsData[selectedTeam].team}
         </h1>
         <Team
-          teamsData={teamsData}
+          teamsData={teamsData.slice(0, 5)}
           category={"AL East"}
           setSelectedTeam={setSelectedTeam}
           startIndex={0}
-          endIndex={5}
         />
         <Team
-          teamsData={teamsData}
+          teamsData={teamsData.slice(5, 10)}
           category={"AL Central"}
           setSelectedTeam={setSelectedTeam}
           startIndex={5}
-          endIndex={10}
         />
         <Team
-          teamsData={teamsData}
+          teamsData={teamsData.slice(10, 15)}
           category={"AL West"}
           setSelectedTeam={setSelectedTeam}
           startIndex={10}
-          endIndex={15}
         />
         <Team
-          teamsData={teamsData}
+          teamsData={teamsData.slice(15, 20)}
           category={"NL East"}
           setSelectedTeam={setSelectedTeam}
           startIndex={15}
-          endIndex={20}
         />
 
         <Team
-          teamsData={teamsData}
+          teamsData={teamsData.slice(20, 25)}
           category={"NL Central"}
           setSelectedTeam={setSelectedTeam}
           startIndex={20}
-          endIndex={25}
         />
         <Team
-          teamsData={teamsData}
+          teamsData={teamsData.slice(25, 30)}
           category={"NL West"}
           setSelectedTeam={setSelectedTeam}
           startIndex={25}
-          endIndex={30}
         />
       </div>
       {/* <Collapse size="large" accordion items={items} /> */}
@@ -179,17 +169,11 @@ const Teams = () => {
 
 export default Teams;
 
-const Team = ({
-  teamsData,
-  category,
-  setSelectedTeam,
-  startIndex,
-  endIndex,
-}) => {
+const Team = ({ teamsData, category, setSelectedTeam, startIndex }) => {
   return (
     <p className="font-semibold text-lg flex gap-2">
       <p className="">{category} : </p>
-      {teamsData?.slice(startIndex, endIndex).map((game, index) => (
+      {teamsData?.map((game, index) => (
         <p
           className="cursor-pointer underline"
           onClick={() => {
