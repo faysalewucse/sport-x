@@ -80,8 +80,14 @@ const ScatterPlot = () => {
     return selectedSeason === "sctr_arr_23" ? "23_Y" : "24_Y";
   };
 
+  const getSeason = () => {
+    return selectedSeason === "sctr_arr_23" ? 2023 : 2024;
+  };
+
+  console.log(selectedSeason);
+
   const tableData = games
-    .filter((game) => game.sctr_y === getSctr())
+    .filter((game) => game.sctr_y === getSctr() && game.sea === getSeason())
     .map((data, i) => {
       if (
         selectedValue !== "all" &&
@@ -178,7 +184,7 @@ const ScatterPlot = () => {
           { value: "sctr_arr_23", label: "2023" },
         ]}
       />
-      <Radio.Group className="mb-5" onChange={onChange} value={selectedValue}>
+      <Radio.Group className="my-5" onChange={onChange} value={selectedValue}>
         <Radio value="AL_yes">SCTR_AL</Radio>
         <Radio value="NL_yes">SCTR_NL</Radio>
         <Radio value="all">All Pitchers</Radio>

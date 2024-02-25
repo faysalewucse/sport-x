@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
-import { ClimbingBoxLoader } from "react-spinners";
 import CustomLoader from "../components/CustomLoader";
 
 // Create a context
