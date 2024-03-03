@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import Cards from "./Cards";
-import Games from "./Games";
 import { RiMenu3Fill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../Constant";
 import axios from "axios";
 import toast from "react-hot-toast";
 import CustomLoader from "../../components/CustomLoader";
+import GamesCard from "../../Cards/GamesCard";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -18,6 +18,7 @@ const HomePage = () => {
       setLoading(true);
       const { data } = await axios.get(`${baseUrl}/first`);
       setFirstGame(data.firstGame);
+
       setPairedTeams(data.pairedTeams);
     } catch (error) {
       toast.error("Something went wrong! homepgae");
@@ -50,8 +51,21 @@ const HomePage = () => {
         </Link>
       </div>
       <Cards />
+      <div>
+        <h1 className="font-bold">Games</h1>
 
-      <Games pairedTeams={pairedTeams} />
+        <div className="flex justify-between font-bold my-3 px-3">
+          <h6 className="w-1/4">Time</h6>
+          <h6 className="w-1/4">Team</h6>
+          <h6 className="w-1/4">Starter</h6>
+          <h6 className="w-1/4">Analytics</h6>
+        </div>
+        <div>
+          {pairedTeams?.map((pair, index) => (
+            <GamesCard key={index} pair={pair} />
+          ))}
+        </div>
+      </div>
       <RiMenu3Fill className="bg-black p-3 text-5xl text-white rounded-lg rotate-90 fixed right-5 bottom-5" />
     </div>
   );
