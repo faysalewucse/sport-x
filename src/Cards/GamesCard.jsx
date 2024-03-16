@@ -10,7 +10,7 @@ const GamesCard = ({ pair }) => {
       </div>
       <div className="flex-1 w-3/4">
         <Link
-          to={`/statistics/${pair[0]?.id}`}
+          to={`/statistics/${pair[0]?.sp_id2}`}
           className="p-1 bg-gray-300 flex justify-between text-xs items-center font-semibold rounded-tr-md"
         >
           <h1 className="w-1/3">{pair[0]?.team}</h1>
@@ -22,7 +22,7 @@ const GamesCard = ({ pair }) => {
           </h1>
         </Link>
         <Link
-          to={`/statistics/${pair[1]?.id}`}
+          to={`/statistics/${pair[1]?.sp_id2}`}
           className="bg-gray-800 p-1 text-white flex justify-between text-xs items-center font-semibold rounded-br-md"
         >
           <h1 className="w-1/3">{pair[1]?.team}</h1>
