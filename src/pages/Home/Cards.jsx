@@ -10,7 +10,7 @@ const Cards = () => {
       details: (
         <div>
           {games[0]?.sp_name} had excellent outing last night, check out his{" "}
-          <Link className="text-blue-400" to={`statistics/${games[0]?.id}`}>
+          <Link className="text-blue-400" to={`statistics/${games[0]?.sp_id2}`}>
             player page
           </Link>
         </div>
@@ -21,7 +21,7 @@ const Cards = () => {
       details: (
         <div>
           {games[0]?.sp_name} had excellent outing last night, check out his{" "}
-          <Link className="text-blue-400" to={`statistics/${games[0]?.id}`}>
+          <Link className="text-blue-400" to={`statistics/${games[0]?.sp_id2}`}>
             player page
           </Link>
         </div>

@@ -41,7 +41,7 @@ const HomePage = () => {
           {firstGame?.sp_name} had excellent outing last night, check out his{" "}
           <Link
             className="text-blue-400"
-            to={`statistics/${firstGame?.sp_id}_${firstGame?.team}`}
+            to={`statistics/${firstGame?.sp_id2}`}
           >
             player page
           </Link>
