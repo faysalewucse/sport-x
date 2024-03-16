@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { RiHome3Line, RiStarFill } from "react-icons/ri";
+import { RiHome3Line } from "react-icons/ri";
 import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
-import { Button, Dropdown, Radio, Select } from "antd";
+import { Button, Collapse, Dropdown, Empty, Radio, Select, theme } from "antd";
 import { useEffect, useState } from "react";
 import { gamesFilter } from "../data/data";
 import axios from "axios";
 import { baseUrl } from "../Constant";
 import toast from "react-hot-toast";
 import CustomLoader from "../components/CustomLoader";
+import { CaretRightOutlined } from "@ant-design/icons";
 
 const Statistics = () => {
   const { id } = useParams();
-
+  const { token } = theme.useToken();
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
 
@@ -94,6 +95,65 @@ const Statistics = () => {
     setSelectedButton(e.target.value);
   };
 
+  const panelStyle = {
+    marginBottom: 24,
+    background: token.colorFillAlter,
+    borderRadius: token.borderRadiusLG,
+    border: "none",
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: <p className="font-bold text-lg">{chartData?.sp_name}</p>,
+      children: (
+        <div>
+          <div>
+            {chartData?.bio_arr?.map((details, index) => (
+              <p key={index}>{details}</p>
+            ))}
+          </div>
+          <SeasonData
+            playerId={id.split("_")[0]}
+            chartData={chartData}
+            data={allSeasonData}
+          />
+        </div>
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "2",
+      label: <p className="font-bold text-lg">Trad Stats</p>,
+      children: (
+        <div>
+          {chartData?.trad_arr?.map((details, index) => (
+            <p key={index}>{details}</p>
+          ))}
+        </div>
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "3",
+      label: <p className="font-bold text-lg">Win-X Stats</p>,
+      children: (
+        <div>
+          {chartData?.sc_arr?.map((details, index) => (
+            <p key={index}>{details}</p>
+          ))}
+        </div>
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "4",
+      label: <p className="font-bold text-lg">Analytics</p>,
+      children: <p>{chartData?.Blurb}</p>,
+      style: panelStyle,
+    },
+  ];
+
   return loading ? (
     <CustomLoader />
   ) : (
@@ -132,53 +192,46 @@ const Statistics = () => {
         </div>
       </div>
 
-      <div className="flex justify-end mb-5">
-        <Radio.Group onChange={onChange} value={selectedButton}>
-          <Radio value={1}>Doted Line</Radio>
-          <Radio value={2}>Moving Avg Line</Radio>
-        </Radio.Group>
-      </div>
+      {chartData?.GS !== 0 ? (
+        <div>
+          <div className="flex justify-end mb-5">
+            <Radio.Group onChange={onChange} value={selectedButton}>
+              <Radio value={1}>Doted Line</Radio>
+              <Radio value={2}>Moving Avg Line</Radio>
+            </Radio.Group>
+          </div>
 
-      <MixedChart
-        x={chartData?.x_arr.split(",")}
-        y={chartData?.y_arr.split(",")}
-        barColor={chartData?.bar_color}
-        awx_arr={chartData?.awx_arr}
-        mov_avg_arr={chartData?.mov_ave_arr}
-        selectedButton={selectedButton}
-      />
+          <MixedChart
+            x={chartData?.x_arr.split(",")}
+            y={chartData?.y_arr.split(",")}
+            barColor={chartData?.bar_color}
+            awx_arr={chartData?.awx_arr}
+            mov_avg_arr={chartData?.mov_ave_arr}
+            selectedButton={selectedButton}
+          />
 
-      <div className="">
-        <h1 className="font-bold mb-3">Sp States</h1>
-        <div className="border p-2 rounded-lg">
-          <b>{chartData?.sp_name}</b>
-          <h1>Age: {chartData?.age}</h1>
-          <h1>Weight: {chartData?.weight}</h1>
-          <b>
-            W/L Record: {chartData?.wx_record} AWX: {chartData?.awx}
-          </b>
-          <SeasonData
-            playerId={id.split("_")[0]}
-            chartData={chartData}
-            data={allSeasonData}
+          <Collapse
+            bordered={false}
+            defaultActiveKey={["1"]}
+            expandIcon={({ isActive }) => (
+              <CaretRightOutlined rotate={isActive ? 90 : 0} />
+            )}
+            style={{
+              background: token.colorBgContainer,
+            }}
+            className="my-10"
+            accordion
+            items={items}
           />
         </div>
-        <h1 className="font-bold my-3">Analytics</h1>
-        <div className="border p-2 rounded-lg">
-          <b className="flex items-center gap-3">
-            <span className="w-3 h-3 bg-pink-800 rounded"></span>
-            {chartData?.A_1}
-          </b>
-          <b className="flex items-center gap-3 mt-2">
-            <RiStarFill className="text-green-500" />
-            {chartData?.A_2}
-          </b>
+      ) : (
+        <div className="">
+          <Empty
+            description={`${chartData?.sp_name} has no data for ${chartData?.sea}`}
+          />
         </div>
-        <h1 className="font-bold my-3">Blurb</h1>
-        <div className="border p-2 rounded-lg">
-          <p className="text-sm text-justify">{chartData?.Blurb}</p>
-        </div>
-      </div>
+      )}
+
       <Link to="/">
         <RiHome3Line className="bg-black text-white rounded-lg p-3 text-5xl fixed bottom-5 right-5" />
       </Link>

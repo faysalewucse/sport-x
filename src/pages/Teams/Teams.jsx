@@ -24,12 +24,10 @@ ChartJS.register(
 );
 
 const Teams = () => {
-  const { games } = useGameContext();
-
-  const [selectedSeason, setSelectedSeason] = useState(2024);
+  const { games, season, setSeason } = useGameContext();
 
   const teamsData = games?.filter(
-    (game) => game.team === game.sp_name && game.sea === selectedSeason
+    (game) => game.team === game.sp_name && game.sea === season
   );
 
   const [selectedTeam, setSelectedTeam] = useState(
@@ -93,7 +91,7 @@ const Teams = () => {
   };
 
   const handleSeason = (value) => {
-    setSelectedSeason(value);
+    setSeason(value);
   };
 
   return (
@@ -102,7 +100,7 @@ const Teams = () => {
         <h6 className="text-sm font-semibold mb-1">Select Season</h6>
         <Select
           className="mb-3"
-          defaultValue="2024"
+          defaultValue={season}
           style={{ width: 120 }}
           onChange={handleSeason}
           options={[
@@ -151,7 +149,6 @@ const Teams = () => {
           startIndex={25}
         />
       </div>
-      {/* <Collapse size="large" accordion items={items} /> */}
       <Bar
         title={teamsData[selectedTeam]?.gid}
         className="my-10"
