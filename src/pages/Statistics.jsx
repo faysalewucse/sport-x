@@ -108,7 +108,7 @@ const Statistics = () => {
       label: <p className="font-bold text-lg">{chartData?.sp_name}</p>,
       children: (
         <div>
-          <div>
+          <div className="grid grid-cols-2 mb-5">
             {chartData?.bio_arr?.map((details, index) => (
               <p key={index}>{details}</p>
             ))}
@@ -126,7 +126,7 @@ const Statistics = () => {
       key: "2",
       label: <p className="font-bold text-lg">Trad Stats</p>,
       children: (
-        <div>
+        <div className="grid grid-cols-2">
           {chartData?.trad_arr?.map((details, index) => (
             <p key={index}>{details}</p>
           ))}
@@ -138,7 +138,7 @@ const Statistics = () => {
       key: "3",
       label: <p className="font-bold text-lg">Win-X Stats</p>,
       children: (
-        <div>
+        <div className="grid grid-cols-2">
           {chartData?.sc_arr?.map((details, index) => (
             <p key={index}>{details}</p>
           ))}
