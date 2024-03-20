@@ -2,18 +2,16 @@
 import { RiHome3Line } from "react-icons/ri";
 import MixedChart from "./Home/MixedChart";
 import { Link, useParams } from "react-router-dom";
-import { Button, Collapse, Dropdown, Empty, Radio, Select, theme } from "antd";
+import { Button, Collapse, Dropdown, Empty, Radio, Select } from "antd";
 import { useEffect, useState } from "react";
 import { gamesFilter } from "../data/data";
 import axios from "axios";
 import { baseUrl } from "../Constant";
 import toast from "react-hot-toast";
 import CustomLoader from "../components/CustomLoader";
-import { CaretRightOutlined } from "@ant-design/icons";
 
 const Statistics = () => {
   const { id } = useParams();
-  const { token } = theme.useToken();
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
 
@@ -95,101 +93,37 @@ const Statistics = () => {
     setSelectedButton(e.target.value);
   };
 
-  const panelStyle = {
-    marginBottom: 24,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: "none",
-  };
-
-  const items = [
-    {
-      key: "1",
-      label: <p className="font-bold text-lg">{chartData?.sp_name}</p>,
-      children: (
-        <div>
-          <div className="grid grid-cols-2 mb-5">
-            {chartData?.bio_arr?.map((details, index) => (
-              <p key={index}>{details}</p>
-            ))}
-          </div>
-          <SeasonData
-            playerId={id.split("_")[0]}
-            chartData={chartData}
-            data={allSeasonData}
-          />
-        </div>
-      ),
-      style: panelStyle,
-    },
-    {
-      key: "2",
-      label: <p className="font-bold text-lg">Trad Stats</p>,
-      children: (
-        <div className="grid grid-cols-2">
-          {chartData?.trad_arr?.map((details, index) => (
-            <p key={index}>{details}</p>
-          ))}
-        </div>
-      ),
-      style: panelStyle,
-    },
-    {
-      key: "3",
-      label: <p className="font-bold text-lg">Win-X Stats</p>,
-      children: (
-        <div className="grid grid-cols-2">
-          {chartData?.sc_arr?.map((details, index) => (
-            <p key={index}>{details}</p>
-          ))}
-        </div>
-      ),
-      style: panelStyle,
-    },
-    {
-      key: "4",
-      label: <p className="font-bold text-lg">Analytics</p>,
-      children: <p>{chartData?.Blurb}</p>,
-      style: panelStyle,
-    },
-  ];
-
   return loading ? (
     <CustomLoader />
   ) : (
     <div className="p-3 relative">
       <div className="my-5">
-        <p className="w-fit">Today&apos;s Pitchers</p>
-        <div className="flex items-center rounded-md gap-2 mb-2 bg-black/90 text-white p-1">
-          <Dropdown
-            className="flex-1"
-            menu={{ items: options }}
-            trigger={["click"]}
+        <p className="mb-2">Search by L. Name</p>
+        <Select
+          showSearch
+          placeholder="Enter Last Name"
+          optionFilterProp="children"
+          onChange={onSearchSelect}
+          className="flex-1 w-full mb-5"
+          filterOption={filterOption}
+          options={searchOptions}
+        />
+        <p className="w-fit mb-2">Chart&apos;s Title</p>
+        <Dropdown
+          className="flex-1"
+          menu={{ items: options }}
+          trigger={["click"]}
+        >
+          <Button
+            type="btn"
+            className="border border-gray-200 bg-white flex justify-between"
+            style={{ width: "100%" }}
           >
-            <Button
-              type="btn"
-              className="border border-gray-200 bg-white flex justify-between"
-              style={{ width: "100%" }}
-            >
-              <p>{chartData?.team}</p>
-              <p>{chartData?.sp_name}</p>
-              <p>{chartData?.sea}</p>
-            </Button>
-          </Dropdown>
-        </div>
-
-        <p className="">Search by L. Name</p>
-        <div className="flex items-center rounded-md gap-2 mb-5 bg-black/90 text-white p-1">
-          <Select
-            showSearch
-            placeholder="Enter Last Name"
-            optionFilterProp="children"
-            onChange={onSearchSelect}
-            className="flex-1"
-            filterOption={filterOption}
-            options={searchOptions}
-          />
-        </div>
+            <p>{chartData?.team}</p>
+            <p>{chartData?.sp_name}</p>
+            <p>{chartData?.sea}</p>
+          </Button>
+        </Dropdown>
       </div>
 
       {chartData?.GS !== 0 ? (
@@ -210,19 +144,78 @@ const Statistics = () => {
             selectedButton={selectedButton}
           />
 
-          <Collapse
-            bordered={false}
-            defaultActiveKey={["1"]}
-            expandIcon={({ isActive }) => (
-              <CaretRightOutlined rotate={isActive ? 90 : 0} />
-            )}
-            style={{
-              background: token.colorBgContainer,
-            }}
-            className="my-10"
-            accordion
-            items={items}
-          />
+          <div className="flex flex-col gap-5 mt-10">
+            <Collapse
+              collapsible="header"
+              defaultActiveKey={["1"]}
+              items={[
+                {
+                  key: "1",
+                  label: (
+                    <p className="font-bold text-lg">{chartData?.sp_name}</p>
+                  ),
+                  children: (
+                    <div>
+                      <div className="grid grid-cols-2 mb-5">
+                        {chartData?.bio_arr?.slice(1).map((details, index) => (
+                          <p key={index}>{details}</p>
+                        ))}
+                      </div>
+                      <SeasonData
+                        playerId={id.split("_")[0]}
+                        chartData={chartData}
+                        data={allSeasonData}
+                      />
+                    </div>
+                  ),
+                },
+              ]}
+            />
+            <Collapse
+              collapsible="header"
+              defaultActiveKey={["1"]}
+              items={[
+                {
+                  key: "2",
+                  label: <p className="font-bold text-lg">Trad Stats</p>,
+                  children: (
+                    <div className="grid grid-cols-2">
+                      {chartData?.trad_arr?.map((details, index) => (
+                        <p key={index}>{details}</p>
+                      ))}
+                    </div>
+                  ),
+                },
+              ]}
+            />
+            <Collapse
+              collapsible="header"
+              items={[
+                {
+                  key: "3",
+                  label: <p className="font-bold text-lg">Win-X Stats</p>,
+                  children: (
+                    <div className="grid grid-cols-2">
+                      {chartData?.sc_arr?.map((details, index) => (
+                        <p key={index}>{details}</p>
+                      ))}
+                    </div>
+                  ),
+                },
+              ]}
+            />
+
+            <Collapse
+              collapsible="header"
+              items={[
+                {
+                  key: "4",
+                  label: <p className="font-bold text-lg">Analytics</p>,
+                  children: <p>{chartData?.Blurb}</p>,
+                },
+              ]}
+            />
+          </div>
         </div>
       ) : (
         <div className="">
