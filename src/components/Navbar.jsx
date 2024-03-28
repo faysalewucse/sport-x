@@ -29,9 +29,14 @@ const items = [
     key: "4",
   },
   {
+    label: <Link to={"/news"}>News</Link>,
+    route: "/news",
+    key: "",
+  },
+  {
     label: <Link to={"/contact"}>Contact</Link>,
     route: "/contact",
-    key: "5",
+    key: "6",
   },
 ];
 
