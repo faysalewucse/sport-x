@@ -15,14 +15,14 @@ const NewsCard = ({ newsInfo }) => {
 
   return (
     <div className="border mb-5 p-5 rounded-md">
-      <h3>{title}</h3>
-      <p>
+      <h3 className="text-xl font-bold">{title}</h3>
+      {/* <p>
         <strong>Author:</strong> {author}
-      </p>
+      </p> */}
       <p>
         <strong>Published Date:</strong> {publishedDate}
       </p>
-      <p>
+      {/* <p>
         <strong>Tags:</strong> {tags}
       </p>
       <p>
@@ -30,15 +30,21 @@ const NewsCard = ({ newsInfo }) => {
       </p>
       <p>
         <strong>Blurb:</strong> {blurb}
-      </p>
-      <div className="flex flex-col">
+      </p> */}
+      <p className="line-clamp-1">
+        {blurb}
+      </p> 
+       <p className="mt-3 underline text-xs">
+        Read More ...
+      </p> 
+      {/* <div className="flex flex-col">
         <a className="text-blue-500" href={`/`}>
           {link1}
         </a>
         <a className="text-blue-500" href={`/`}>
           {linkText1}
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };

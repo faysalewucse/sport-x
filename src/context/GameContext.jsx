@@ -13,8 +13,7 @@ const GameProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
   const [season, setSeason] = useState(2024);
-
-  console.log(import.meta.env.VITE_BASE_URL);
+  
 
   useEffect(() => {
     // Fetch data from the URL
