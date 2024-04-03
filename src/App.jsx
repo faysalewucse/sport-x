@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import Teams from "./pages/Teams/Teams";
 import GameProvider from "./context/GameContext";
 import News from "./pages/News";
+import NewsDetails from "./pages/NewsDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/news",
         element: <News />,
+      },
+      {
+        path: "/news/:id",
+        element: <NewsDetails />,
       },
       {
         path: "/statistics/:id",

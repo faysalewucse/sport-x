@@ -31,8 +31,8 @@ const News = () => {
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5">News</h1>
       <div>
-        {news?.map((n) => (
-          <NewsCard newsInfo={n.News} key={n.id} />
+        {news?.map((n, index) => (
+          <NewsCard index={index} newsInfo={n.News} key={n.id} />
         ))}
       </div>
     </div>

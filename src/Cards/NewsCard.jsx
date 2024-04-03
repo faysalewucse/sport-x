@@ -1,4 +1,6 @@
-const NewsCard = ({ newsInfo }) => {
+import { Link } from "react-router-dom";
+
+const NewsCard = ({ newsInfo, index }) => {
   // Destructure fields from the newsInfo array
   const title = newsInfo[0];
   const author = newsInfo[1];
@@ -34,9 +36,9 @@ const NewsCard = ({ newsInfo }) => {
       <p className="line-clamp-1">
         {blurb}
       </p> 
-       <p className="mt-3 underline text-xs">
+       <Link to={`/news/${index+1}`} className="mt-3 underline text-xs">
         Read More ...
-      </p> 
+      </Link> 
       {/* <div className="flex flex-col">
         <a className="text-blue-500" href={`/`}>
           {link1}
