@@ -12,13 +12,16 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [firstGame, setFirstGame] = useState({});
   const [pairedTeams, setPairedTeams] = useState([]);
+  const [news, setNews] = useState({});
 
   const fetchFirstGame = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`${baseUrl}/first`);
-      setFirstGame(data.firstGame);
+      const { data: news } = await axios.get(`${baseUrl}/news`);
 
+      setFirstGame(data.firstGame);
+      setNews(news);
       setPairedTeams(data.pairedTeams);
     } catch (error) {
       toast.error("Something went wrong! homepgae");
@@ -50,7 +53,7 @@ const HomePage = () => {
           Visit us
         </Link>
       </div>
-      <Cards />
+      <Cards news={news} />
       <div>
         <h1 className="font-bold">Games</h1>
 
