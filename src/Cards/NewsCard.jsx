@@ -33,12 +33,10 @@ const NewsCard = ({ newsInfo, index }) => {
       <p>
         <strong>Blurb:</strong> {blurb}
       </p> */}
-      <p className="line-clamp-1">
-        {blurb}
-      </p> 
-       <Link to={`/news/${index+1}`} className="mt-3 underline text-xs">
+      <p className="">{blurb}</p>
+      <Link to={`/news/${index + 1}`} className="mt-3 underline text-xs">
         Read More ...
-      </Link> 
+      </Link>
       {/* <div className="flex flex-col">
         <a className="text-blue-500" href={`/`}>
           {link1}
