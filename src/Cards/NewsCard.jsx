@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const NewsCard = ({ newsInfo, index }) => {
@@ -15,8 +16,23 @@ const NewsCard = ({ newsInfo, index }) => {
   const [link1, link2] = links.split("|");
   const [linkText1, linkText2] = linkText.split("|");
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const truncateText = (text, limit) => {
+    const words = text.split(" ");
+    if (words.length > limit) {
+      return words.slice(0, limit).join(" ") + " ...";
+    } else {
+      return text;
+    }
+  };
+
   return (
-    <div className="border mb-5 p-5 rounded-md">
+    <div className="border mb-5 p-5 rounded-md cursor-pointer hover:shadow-md transform transition-300">
       <h3 className="text-xl font-bold">{title}</h3>
       {/* <p>
         <strong>Author:</strong> {author}
@@ -33,10 +49,15 @@ const NewsCard = ({ newsInfo, index }) => {
       <p>
         <strong>Blurb:</strong> {blurb}
       </p> */}
-      <p className="">{blurb}</p>
-      <Link to={`/news/${index + 1}`} className="mt-3 underline text-xs">
-        Read More ...
-      </Link>
+      <p>{isExpanded ? blurb : truncateText(blurb, 10)}</p>
+
+      <button
+        className="text-xs text-blue-500 underline"
+        onClick={toggleExpanded}
+      >
+        {isExpanded ? "Show less" : "Read More"}
+      </button>
+
       {/* <div className="flex flex-col">
         <a className="text-blue-500" href={`/`}>
           {link1}
