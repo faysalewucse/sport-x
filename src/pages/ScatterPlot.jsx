@@ -88,7 +88,13 @@ const ScatterPlot = () => {
 
   const tableData = games
     .filter((game) => game.sctr_y === getSctr() && game.sea === getSeason())
+    .sort((a, b) =>
+      selectedValue === "all"
+        ? a[selectedSeason][3] - b[selectedSeason][3]
+        : a[selectedSeason][1] - b[selectedSeason][1]
+    )
     .map((data, i) => {
+      console.log(data[selectedSeason]);
       if (
         selectedValue !== "all" &&
         data[selectedSeason][0] !== selectedValue
