@@ -94,7 +94,6 @@ const ScatterPlot = () => {
         : a[selectedSeason][1] - b[selectedSeason][1]
     )
     .map((data, i) => {
-      console.log(data[selectedSeason]);
       if (
         selectedValue !== "all" &&
         data[selectedSeason][0] !== selectedValue
